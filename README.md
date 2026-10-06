@@ -2,6 +2,8 @@
 
 Five runnable Python/SQL projects focused on reliable data systems and ML engineering. Python 3.11+. DemandServe uses NumPy; the other offline demos need only the standard library. No cloud account or credentials are needed for local demos.
 
+**Cost policy: $0 out-of-pocket.** All enabled demos run locally; AWS deployment is disabled and the legacy deployment script now only packages files. See [cost policy](docs/cost-policy.md).
+
 | Project | Problem | Implemented behavior |
 | --- | --- | --- |
 | [CivicFlow](docs/civicflow.md) | Public operational data contains corrections and invalid records | Bounded API extraction, immutable raw batches, transactional keyed upserts, quarantine, audit lineage, SQL reporting, offline dashboard |
@@ -67,7 +69,7 @@ python3 -m awsflow.demo
 python3 infra/build_awsflow.py
 ```
 
-AWSFlow has a complete [AWS deployment exercise](docs/awsflow-deployment.md). Offline tests use an in-memory S3 adapter, and SDK shape checks use boto3 Stubber; these are separate from live cloud evidence. Glue here means the Data Catalog, not a Glue ETL job. Live deployment is not yet verified.
+AWSFlow has an [AWS preparation walkthrough](docs/awsflow-deployment.md) under the $0 project policy. Offline tests use an in-memory S3 adapter, and SDK shape checks use boto3 Stubber; these are separate from live cloud evidence. Glue here means the Data Catalog, not a Glue ETL job. Live deployment is disabled and unverified.
 
 ## Change-data and model-serving projects
 

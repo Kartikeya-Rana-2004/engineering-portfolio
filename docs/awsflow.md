@@ -2,6 +2,8 @@
 
 AWS-specific implementation of a public-data pipeline. Developed with Codex assistance. Local verification and public source code are complete; cloud deployment and Athena execution are not yet verified.
 
+**$0 project policy:** deployment is disabled. `scripts/deploy_awsflow.sh` builds local files only. Use the offline demos and SDK checks below; see [cost policy](cost-policy.md).
+
 ```mermaid
 flowchart LR
   A[Upload bounded JSONL to S3 bronze] --> B[EventBridge prefix rule]
