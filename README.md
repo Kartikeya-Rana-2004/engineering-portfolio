@@ -2,7 +2,7 @@
 
 Five runnable Python/SQL projects focused on reliable data systems and ML engineering. Python 3.11+. DemandServe uses NumPy; the other offline demos need only the standard library. No cloud account or credentials are needed for local demos.
 
-**Cost policy: $0 out-of-pocket.** All enabled demos run locally; AWS deployment is disabled and the legacy deployment script now only packages files. See [cost policy](docs/cost-policy.md).
+
 
 | Project | Problem | Implemented behavior |
 | --- | --- | --- |
