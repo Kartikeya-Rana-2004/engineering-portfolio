@@ -1,0 +1,36 @@
+{
+  "source": "https://data.cityofnewyork.us/resource/erm2-nwe9.json",
+  "window_start": "2025-01-01",
+  "window_end_exclusive": "2025-01-08",
+  "sample": "first 12000 rows ordered by created_date, unique_key; truncated extraction",
+  "initial_load": {
+    "source_rows": 12000,
+    "accepted": 11998,
+    "quarantined": 2,
+    "reasons": {
+      "closed_date:before_created_date": 2
+    },
+    "inserted": 11998,
+    "updated": 0,
+    "unchanged": 0,
+    "status": "completed",
+    "load_seconds": 0.12,
+    "truncated": true
+  },
+  "replay": {
+    "source_rows": 12000,
+    "accepted": 11998,
+    "quarantined": 2,
+    "reasons": {
+      "closed_date:before_created_date": 2
+    },
+    "inserted": 0,
+    "updated": 0,
+    "unchanged": 11998,
+    "status": "completed"
+  },
+  "replay_load_seconds": 0.0946,
+  "silver_rows": 11998,
+  "gold_reconciled_rows": 11998,
+  "scope": "single local run; load timing excludes extraction and is not a benchmark"
+}

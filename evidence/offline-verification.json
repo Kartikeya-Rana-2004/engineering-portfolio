@@ -1,0 +1,29 @@
+{
+  "verification": "synthetic deterministic fixture; not real-data scale evidence",
+  "verified_at": "2026-10-06T21:12:37.503030+00:00",
+  "initial_inserted": 3,
+  "replay_inserted": 0,
+  "replay_unchanged": 3,
+  "correction_updated": 1,
+  "bad_batch_status": "blocked_quality_gate",
+  "silver_rows": 3,
+  "gold_rows_reconciled": 3,
+  "drift_detected": [
+    {
+      "field": "agency",
+      "change": "types_changed",
+      "severity": "error"
+    },
+    {
+      "field": "agency",
+      "change": "null_fraction_increased",
+      "delta": 1.0,
+      "severity": "error"
+    },
+    {
+      "field": "unique_key",
+      "change": "types_changed",
+      "severity": "error"
+    }
+  ]
+}

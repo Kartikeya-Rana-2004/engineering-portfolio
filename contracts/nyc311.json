@@ -1,0 +1,14 @@
+{
+  "name": "nyc311-v1",
+  "unknown_fields": "reject",
+  "fields": {
+    "unique_key": {"type": "string", "required": true},
+    "created_date": {"type": "timestamp", "required": true},
+    "closed_date": {"type": "timestamp"},
+    "agency": {"type": "string", "required": true},
+    "complaint_type": {"type": "string", "required": true},
+    "borough": {"type": "string", "required": true},
+    "status": {"type": "string", "required": true}
+  },
+  "comparisons": [{"left": "closed_date", "right": "created_date", "op": "gte"}]
+}
