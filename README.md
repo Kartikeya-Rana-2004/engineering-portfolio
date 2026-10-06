@@ -1,12 +1,14 @@
 # Engineering Portfolio: CivicFlow + ContractWatch
 
-Three runnable Python/SQL projects focused on reliable data systems. Python 3.11+; no third-party runtime dependencies, cloud account, or credentials required for the offline demos.
+Five runnable Python/SQL projects focused on reliable data systems and ML engineering. Python 3.11+. DemandServe uses NumPy; the other offline demos need only the standard library. No cloud account or credentials are needed for local demos.
 
 | Project | Problem | Implemented behavior |
 | --- | --- | --- |
 | [CivicFlow](docs/civicflow.md) | Public operational data contains corrections and invalid records | Bounded API extraction, immutable raw batches, transactional keyed upserts, quarantine, audit lineage, SQL reporting, offline dashboard |
 | [ContractWatch](docs/contractwatch.md) | Upstream changes silently break downstream consumers | Versioned record contracts, observed-schema profiles, type/missingness drift, machine-readable reports, nonzero exit status on failures |
 | [AWSFlow](docs/awsflow.md) | Cloud events can repeat or fail halfway through a batch | AWS S3/EventBridge/SQS/Lambda pipeline, commit-last manifests, Glue catalog, Athena partition projection, scoped IAM, CloudFormation, CloudWatch alarms |
+| [LedgerStream](docs/ledgerstream.md) | Source changes and events can diverge, or retries can double-count aggregates | Transactional outbox, durable ordered checkpoints, replay detection, dead letters, entity versions, delete tombstones, atomic projection recovery |
+| [DemandServe](docs/demandserve.md) | Model metrics and serving logic can hide leakage or inconsistent features | Chronological evaluation, baseline comparisons, shared train/serve features, versioned ridge artifact, validated HTTP predictions |
 
 ```mermaid
 flowchart LR
@@ -24,6 +26,7 @@ flowchart LR
 Run from this repository's root:
 
 ```bash
+python3 -m pip install -r requirements-ml.txt
 python3 -m unittest discover -s tests -v
 python3 scripts/verify.py
 python3 -m civicflow --input examples/requests.jsonl
@@ -65,6 +68,15 @@ python3 infra/build_awsflow.py
 ```
 
 AWSFlow has a complete [AWS deployment exercise](docs/awsflow-deployment.md). Offline tests use an in-memory S3 adapter, and SDK shape checks use boto3 Stubber; these are separate from live cloud evidence. Glue here means the Data Catalog, not a Glue ETL job. Live deployment is not yet verified.
+
+## Change-data and model-serving projects
+
+```bash
+python3 -m ledgerstream
+python3 scripts/verify_demandserve_api.py
+```
+
+LedgerStream exercises actual local database transactions on synthetic orders, including an injected crash. DemandServe's trained artifact was evaluated on real historical UCI data and checked through a real loopback HTTP server. Neither is hosted as a production service. Read their project pages for exact technology boundaries and measured outcomes.
 
 ## Provenance
 

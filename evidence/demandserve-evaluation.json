@@ -1,0 +1,781 @@
+{
+  "source": "UCI Bike Sharing, daily counts, 2011\u20132012",
+  "source_sha256": "a6bcf826782d3c0fbfdcbeead17cd0884185a0dafe8ff10cd48a874ee7ba18be",
+  "source_rows": 731,
+  "usable_rows": 717,
+  "split": {
+    "train": 430,
+    "validation": 143,
+    "test": 144
+  },
+  "test_start": "2012-08-10",
+  "test_end": "2012-12-31",
+  "validation_trials": [
+    {
+      "alpha": 0.1,
+      "mae": 736.565,
+      "rmse": 1046.417
+    },
+    {
+      "alpha": 1.0,
+      "mae": 735.56,
+      "rmse": 1045.672
+    },
+    {
+      "alpha": 10.0,
+      "mae": 728.925,
+      "rmse": 1040.719
+    },
+    {
+      "alpha": 100.0,
+      "mae": 767.649,
+      "rmse": 1044.034
+    }
+  ],
+  "selected_alpha": 10.0,
+  "test": {
+    "ridge": {
+      "mae": 898.523,
+      "rmse": 1242.936
+    },
+    "yesterday": {
+      "mae": 891.354,
+      "rmse": 1295.075
+    },
+    "same_weekday_last_week": {
+      "mae": 1218.736,
+      "rmse": 1777.879
+    }
+  },
+  "protocol": "chronological split; hyperparameters selected on validation; final fit uses train+validation; rolling one-day-ahead test uses earlier actual observations, including earlier test days",
+  "excluded_fields": [
+    "casual",
+    "registered",
+    "same_day_cnt",
+    "same_day_weather",
+    "same_day_temperature"
+  ],
+  "model_id": "b1b87f72b9e402be",
+  "test_predictions": [
+    {
+      "date": "2012-08-10",
+      "actual": 5786,
+      "predicted": 7066.861
+    },
+    {
+      "date": "2012-08-11",
+      "actual": 6299,
+      "predicted": 6483.12
+    },
+    {
+      "date": "2012-08-12",
+      "actual": 6544,
+      "predicted": 6511.496
+    },
+    {
+      "date": "2012-08-13",
+      "actual": 6883,
+      "predicted": 6649.449
+    },
+    {
+      "date": "2012-08-14",
+      "actual": 6784,
+      "predicted": 6915.563
+    },
+    {
+      "date": "2012-08-15",
+      "actual": 7347,
+      "predicted": 6684.028
+    },
+    {
+      "date": "2012-08-16",
+      "actual": 7605,
+      "predicted": 7047.939
+    },
+    {
+      "date": "2012-08-17",
+      "actual": 7148,
+      "predicted": 7120.116
+    },
+    {
+      "date": "2012-08-18",
+      "actual": 7865,
+      "predicted": 6888.059
+    },
+    {
+      "date": "2012-08-19",
+      "actual": 4549,
+      "predicted": 6955.104
+    },
+    {
+      "date": "2012-08-20",
+      "actual": 6530,
+      "predicted": 6007.409
+    },
+    {
+      "date": "2012-08-21",
+      "actual": 7006,
+      "predicted": 6778.728
+    },
+    {
+      "date": "2012-08-22",
+      "actual": 7375,
+      "predicted": 6725.028
+    },
+    {
+      "date": "2012-08-23",
+      "actual": 7765,
+      "predicted": 7024.034
+    },
+    {
+      "date": "2012-08-24",
+      "actual": 7582,
+      "predicted": 7067.749
+    },
+    {
+      "date": "2012-08-25",
+      "actual": 6053,
+      "predicted": 6952.909
+    },
+    {
+      "date": "2012-08-26",
+      "actual": 5255,
+      "predicted": 6396.288
+    },
+    {
+      "date": "2012-08-27",
+      "actual": 6917,
+      "predicted": 6175.997
+    },
+    {
+      "date": "2012-08-28",
+      "actual": 7040,
+      "predicted": 6844.383
+    },
+    {
+      "date": "2012-08-29",
+      "actual": 7697,
+      "predicted": 6701.32
+    },
+    {
+      "date": "2012-08-30",
+      "actual": 7713,
+      "predicted": 7112.097
+    },
+    {
+      "date": "2012-08-31",
+      "actual": 7350,
+      "predicted": 7058.116
+    },
+    {
+      "date": "2012-09-01",
+      "actual": 6140,
+      "predicted": 6912.919
+    },
+    {
+      "date": "2012-09-02",
+      "actual": 5810,
+      "predicted": 6292.736
+    },
+    {
+      "date": "2012-09-03",
+      "actual": 6034,
+      "predicted": 6307.795
+    },
+    {
+      "date": "2012-09-04",
+      "actual": 6864,
+      "predicted": 6536.064
+    },
+    {
+      "date": "2012-09-05",
+      "actual": 7112,
+      "predicted": 6586.163
+    },
+    {
+      "date": "2012-09-06",
+      "actual": 6203,
+      "predicted": 6861.652
+    },
+    {
+      "date": "2012-09-07",
+      "actual": 7504,
+      "predicted": 6490.771
+    },
+    {
+      "date": "2012-09-08",
+      "actual": 5976,
+      "predicted": 6777.857
+    },
+    {
+      "date": "2012-09-09",
+      "actual": 8227,
+      "predicted": 6147.089
+    },
+    {
+      "date": "2012-09-10",
+      "actual": 7525,
+      "predicted": 7026.338
+    },
+    {
+      "date": "2012-09-11",
+      "actual": 7767,
+      "predicted": 6998.187
+    },
+    {
+      "date": "2012-09-12",
+      "actual": 7870,
+      "predicted": 6916.997
+    },
+    {
+      "date": "2012-09-13",
+      "actual": 7804,
+      "predicted": 7185.689
+    },
+    {
+      "date": "2012-09-14",
+      "actual": 8009,
+      "predicted": 7099.729
+    },
+    {
+      "date": "2012-09-15",
+      "actual": 8714,
+      "predicted": 7086.395
+    },
+    {
+      "date": "2012-09-16",
+      "actual": 7333,
+      "predicted": 7173.861
+    },
+    {
+      "date": "2012-09-17",
+      "actual": 6869,
+      "predicted": 6851.507
+    },
+    {
+      "date": "2012-09-18",
+      "actual": 4073,
+      "predicted": 6901.168
+    },
+    {
+      "date": "2012-09-19",
+      "actual": 7591,
+      "predicted": 5761.806
+    },
+    {
+      "date": "2012-09-20",
+      "actual": 7720,
+      "predicted": 7011.054
+    },
+    {
+      "date": "2012-09-21",
+      "actual": 8167,
+      "predicted": 7055.991
+    },
+    {
+      "date": "2012-09-22",
+      "actual": 8395,
+      "predicted": 7048.936
+    },
+    {
+      "date": "2012-09-23",
+      "actual": 7907,
+      "predicted": 7105.347
+    },
+    {
+      "date": "2012-09-24",
+      "actual": 7436,
+      "predicted": 7016.547
+    },
+    {
+      "date": "2012-09-25",
+      "actual": 7538,
+      "predicted": 7122.602
+    },
+    {
+      "date": "2012-09-26",
+      "actual": 7733,
+      "predicted": 6930.695
+    },
+    {
+      "date": "2012-09-27",
+      "actual": 7393,
+      "predicted": 7186.377
+    },
+    {
+      "date": "2012-09-28",
+      "actual": 7415,
+      "predicted": 7016.958
+    },
+    {
+      "date": "2012-09-29",
+      "actual": 8555,
+      "predicted": 6927.171
+    },
+    {
+      "date": "2012-09-30",
+      "actual": 6889,
+      "predicted": 7098.712
+    },
+    {
+      "date": "2012-10-01",
+      "actual": 6778,
+      "predicted": 6632.093
+    },
+    {
+      "date": "2012-10-02",
+      "actual": 4639,
+      "predicted": 6668.116
+    },
+    {
+      "date": "2012-10-03",
+      "actual": 7572,
+      "predicted": 5889.025
+    },
+    {
+      "date": "2012-10-04",
+      "actual": 7328,
+      "predicted": 6992.887
+    },
+    {
+      "date": "2012-10-05",
+      "actual": 8156,
+      "predicted": 6874.611
+    },
+    {
+      "date": "2012-10-06",
+      "actual": 7965,
+      "predicted": 7026.419
+    },
+    {
+      "date": "2012-10-07",
+      "actual": 3510,
+      "predicted": 6832.001
+    },
+    {
+      "date": "2012-10-08",
+      "actual": 5478,
+      "predicted": 5412.099
+    },
+    {
+      "date": "2012-10-09",
+      "actual": 6392,
+      "predicted": 6185.075
+    },
+    {
+      "date": "2012-10-10",
+      "actual": 7691,
+      "predicted": 6217.278
+    },
+    {
+      "date": "2012-10-11",
+      "actual": 7570,
+      "predicted": 6811.138
+    },
+    {
+      "date": "2012-10-12",
+      "actual": 7282,
+      "predicted": 6711.973
+    },
+    {
+      "date": "2012-10-13",
+      "actual": 7109,
+      "predicted": 6556.368
+    },
+    {
+      "date": "2012-10-14",
+      "actual": 6639,
+      "predicted": 6377.948
+    },
+    {
+      "date": "2012-10-15",
+      "actual": 5875,
+      "predicted": 6297.118
+    },
+    {
+      "date": "2012-10-16",
+      "actual": 7534,
+      "predicted": 6140.25
+    },
+    {
+      "date": "2012-10-17",
+      "actual": 7461,
+      "predicted": 6572.272
+    },
+    {
+      "date": "2012-10-18",
+      "actual": 7509,
+      "predicted": 6742.242
+    },
+    {
+      "date": "2012-10-19",
+      "actual": 5424,
+      "predicted": 6741.139
+    },
+    {
+      "date": "2012-10-20",
+      "actual": 8090,
+      "predicted": 5943.654
+    },
+    {
+      "date": "2012-10-21",
+      "actual": 6824,
+      "predicted": 6503.656
+    },
+    {
+      "date": "2012-10-22",
+      "actual": 7058,
+      "predicted": 6315.634
+    },
+    {
+      "date": "2012-10-23",
+      "actual": 7466,
+      "predicted": 6588.163
+    },
+    {
+      "date": "2012-10-24",
+      "actual": 7693,
+      "predicted": 6576.048
+    },
+    {
+      "date": "2012-10-25",
+      "actual": 7359,
+      "predicted": 6846.577
+    },
+    {
+      "date": "2012-10-26",
+      "actual": 7444,
+      "predicted": 6730.479
+    },
+    {
+      "date": "2012-10-27",
+      "actual": 7852,
+      "predicted": 6631.707
+    },
+    {
+      "date": "2012-10-28",
+      "actual": 4459,
+      "predicted": 6635.192
+    },
+    {
+      "date": "2012-10-29",
+      "actual": 22,
+      "predicted": 5571.833
+    },
+    {
+      "date": "2012-10-30",
+      "actual": 1096,
+      "predicted": 4236.323
+    },
+    {
+      "date": "2012-10-31",
+      "actual": 5566,
+      "predicted": 4169.381
+    },
+    {
+      "date": "2012-11-01",
+      "actual": 5986,
+      "predicted": 5682.315
+    },
+    {
+      "date": "2012-11-02",
+      "actual": 5847,
+      "predicted": 5652.286
+    },
+    {
+      "date": "2012-11-03",
+      "actual": 5138,
+      "predicted": 5573.37
+    },
+    {
+      "date": "2012-11-04",
+      "actual": 5107,
+      "predicted": 5169.534
+    },
+    {
+      "date": "2012-11-05",
+      "actual": 5259,
+      "predicted": 5324.588
+    },
+    {
+      "date": "2012-11-06",
+      "actual": 5686,
+      "predicted": 5584.473
+    },
+    {
+      "date": "2012-11-07",
+      "actual": 5035,
+      "predicted": 5470.168
+    },
+    {
+      "date": "2012-11-08",
+      "actual": 5315,
+      "predicted": 5408.059
+    },
+    {
+      "date": "2012-11-09",
+      "actual": 5992,
+      "predicted": 5410.865
+    },
+    {
+      "date": "2012-11-10",
+      "actual": 6536,
+      "predicted": 5537.646
+    },
+    {
+      "date": "2012-11-11",
+      "actual": 6852,
+      "predicted": 5460.553
+    },
+    {
+      "date": "2012-11-12",
+      "actual": 6269,
+      "predicted": 5549.803
+    },
+    {
+      "date": "2012-11-13",
+      "actual": 4094,
+      "predicted": 5675.949
+    },
+    {
+      "date": "2012-11-14",
+      "actual": 5495,
+      "predicted": 4994.558
+    },
+    {
+      "date": "2012-11-15",
+      "actual": 5445,
+      "predicted": 5638.429
+    },
+    {
+      "date": "2012-11-16",
+      "actual": 5698,
+      "predicted": 5550.318
+    },
+    {
+      "date": "2012-11-17",
+      "actual": 5629,
+      "predicted": 5497.807
+    },
+    {
+      "date": "2012-11-18",
+      "actual": 4669,
+      "predicted": 5320.502
+    },
+    {
+      "date": "2012-11-19",
+      "actual": 5499,
+      "predicted": 5076.413
+    },
+    {
+      "date": "2012-11-20",
+      "actual": 5634,
+      "predicted": 5558.248
+    },
+    {
+      "date": "2012-11-21",
+      "actual": 5146,
+      "predicted": 5380.103
+    },
+    {
+      "date": "2012-11-22",
+      "actual": 2425,
+      "predicted": 5443.071
+    },
+    {
+      "date": "2012-11-23",
+      "actual": 3910,
+      "predicted": 4493.372
+    },
+    {
+      "date": "2012-11-24",
+      "actual": 2277,
+      "predicted": 4817.818
+    },
+    {
+      "date": "2012-11-25",
+      "actual": 2424,
+      "predicted": 4097.077
+    },
+    {
+      "date": "2012-11-26",
+      "actual": 5087,
+      "predicted": 4075.33
+    },
+    {
+      "date": "2012-11-27",
+      "actual": 3959,
+      "predicted": 4967.214
+    },
+    {
+      "date": "2012-11-28",
+      "actual": 5260,
+      "predicted": 4461.154
+    },
+    {
+      "date": "2012-11-29",
+      "actual": 5323,
+      "predicted": 5124.589
+    },
+    {
+      "date": "2012-11-30",
+      "actual": 5668,
+      "predicted": 5114.99
+    },
+    {
+      "date": "2012-12-01",
+      "actual": 5191,
+      "predicted": 5196.596
+    },
+    {
+      "date": "2012-12-02",
+      "actual": 4649,
+      "predicted": 4918.002
+    },
+    {
+      "date": "2012-12-03",
+      "actual": 6234,
+      "predicted": 4822.41
+    },
+    {
+      "date": "2012-12-04",
+      "actual": 6606,
+      "predicted": 5539.786
+    },
+    {
+      "date": "2012-12-05",
+      "actual": 5729,
+      "predicted": 5475.484
+    },
+    {
+      "date": "2012-12-06",
+      "actual": 5375,
+      "predicted": 5347.255
+    },
+    {
+      "date": "2012-12-07",
+      "actual": 5008,
+      "predicted": 5277.444
+    },
+    {
+      "date": "2012-12-08",
+      "actual": 5582,
+      "predicted": 5047.494
+    },
+    {
+      "date": "2012-12-09",
+      "actual": 3228,
+      "predicted": 5156.439
+    },
+    {
+      "date": "2012-12-10",
+      "actual": 5170,
+      "predicted": 4546.85
+    },
+    {
+      "date": "2012-12-11",
+      "actual": 5501,
+      "predicted": 5256.229
+    },
+    {
+      "date": "2012-12-12",
+      "actual": 5319,
+      "predicted": 5236.416
+    },
+    {
+      "date": "2012-12-13",
+      "actual": 5532,
+      "predicted": 5394.355
+    },
+    {
+      "date": "2012-12-14",
+      "actual": 5611,
+      "predicted": 5441.078
+    },
+    {
+      "date": "2012-12-15",
+      "actual": 5047,
+      "predicted": 5361.173
+    },
+    {
+      "date": "2012-12-16",
+      "actual": 3786,
+      "predicted": 5080.363
+    },
+    {
+      "date": "2012-12-17",
+      "actual": 4585,
+      "predicted": 4769.41
+    },
+    {
+      "date": "2012-12-18",
+      "actual": 5557,
+      "predicted": 5160.201
+    },
+    {
+      "date": "2012-12-19",
+      "actual": 5267,
+      "predicted": 5233.391
+    },
+    {
+      "date": "2012-12-20",
+      "actual": 4128,
+      "predicted": 5331.269
+    },
+    {
+      "date": "2012-12-21",
+      "actual": 3623,
+      "predicted": 4889.157
+    },
+    {
+      "date": "2012-12-22",
+      "actual": 1749,
+      "predicted": 4631.277
+    },
+    {
+      "date": "2012-12-23",
+      "actual": 1787,
+      "predicted": 3773.832
+    },
+    {
+      "date": "2012-12-24",
+      "actual": 920,
+      "predicted": 3849.042
+    },
+    {
+      "date": "2012-12-25",
+      "actual": 1013,
+      "predicted": 3630.713
+    },
+    {
+      "date": "2012-12-26",
+      "actual": 441,
+      "predicted": 3338.518
+    },
+    {
+      "date": "2012-12-27",
+      "actual": 2114,
+      "predicted": 3260.904
+    },
+    {
+      "date": "2012-12-28",
+      "actual": 3095,
+      "predicted": 3662.01
+    },
+    {
+      "date": "2012-12-29",
+      "actual": 1341,
+      "predicted": 3859.625
+    },
+    {
+      "date": "2012-12-30",
+      "actual": 1796,
+      "predicted": 3089.485
+    },
+    {
+      "date": "2012-12-31",
+      "actual": 2729,
+      "predicted": 3319.906
+    }
+  ]
+}

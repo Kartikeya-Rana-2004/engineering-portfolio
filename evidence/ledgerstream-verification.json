@@ -1,0 +1,25 @@
+{
+  "execution": "real local SQLite source/outbox and projection; synthetic orders; no Kafka or PostgreSQL deployment",
+  "events": 4,
+  "checkpoint_after_injected_crash": 0,
+  "recovery": {
+    "applied": 4,
+    "replayed": 0,
+    "stale": 0,
+    "quarantined": 0
+  },
+  "replay": {
+    "applied": 0,
+    "replayed": 4,
+    "stale": 0,
+    "quarantined": 0
+  },
+  "final_metrics": [
+    [
+      "paid",
+      1,
+      5000
+    ]
+  ],
+  "retained_delete_tombstones": 1
+}
