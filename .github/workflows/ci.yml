@@ -20,3 +20,17 @@ jobs:
       - run: python -m civicflow --input examples/requests.jsonl
       - run: python -m civicflow.report
       - run: python -m contractwatch examples/requests.jsonl --contract contracts/nyc311.json
+      - run: python -m awsflow.demo
+      - run: python infra/build_awsflow.py
+      - run: git diff --exit-code -- infra/awsflow/template.json
+  aws-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-aws-dev.txt
+      - run: python scripts/verify_aws_sdk.py
+      - run: cfn-lint infra/awsflow/template.json
+      - run: bash -n scripts/deploy_awsflow.sh

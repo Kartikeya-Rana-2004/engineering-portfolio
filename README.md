@@ -1,11 +1,12 @@
 # Engineering Portfolio: CivicFlow + ContractWatch
 
-Two runnable Python/SQL projects focused on reliable data systems. Python 3.11+; no third-party runtime dependencies, cloud account, or credentials required for the offline demo.
+Three runnable Python/SQL projects focused on reliable data systems. Python 3.11+; no third-party runtime dependencies, cloud account, or credentials required for the offline demos.
 
 | Project | Problem | Implemented behavior |
 | --- | --- | --- |
 | [CivicFlow](docs/civicflow.md) | Public operational data contains corrections and invalid records | Bounded API extraction, immutable raw batches, transactional keyed upserts, quarantine, audit lineage, SQL reporting, offline dashboard |
 | [ContractWatch](docs/contractwatch.md) | Upstream changes silently break downstream consumers | Versioned record contracts, observed-schema profiles, type/missingness drift, machine-readable reports, nonzero exit status on failures |
+| [AWSFlow](docs/awsflow.md) | Cloud events can repeat or fail halfway through a batch | AWS S3/EventBridge/SQS/Lambda pipeline, commit-last manifests, Glue catalog, Athena partition projection, scoped IAM, CloudFormation, CloudWatch alarms |
 
 ```mermaid
 flowchart LR
@@ -55,6 +56,15 @@ Source: [NYC 311 Service Requests, 2020–present](https://data.cityofnewyork.us
 - ContractWatch profiles an observed sample; rare types and absent fields can produce misleading drift signals. Configure thresholds and review changes rather than treating it as statistical proof.
 
 See [design and recovery notes](docs/design.md) and [interview walkthrough](docs/interview-walkthrough.md).
+
+## AWS project
+
+```bash
+python3 -m awsflow.demo
+python3 infra/build_awsflow.py
+```
+
+AWSFlow has a complete [AWS deployment exercise](docs/awsflow-deployment.md). Offline tests use an in-memory S3 adapter, and SDK shape checks use boto3 Stubber; these are separate from live cloud evidence. Glue here means the Data Catalog, not a Glue ETL job. Live deployment is not yet verified.
 
 ## Provenance
 

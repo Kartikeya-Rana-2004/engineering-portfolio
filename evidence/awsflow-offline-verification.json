@@ -1,0 +1,10 @@
+{
+  "execution": "offline in-memory S3 adapter; no AWS services invoked",
+  "input_rows": 3,
+  "accepted": 3,
+  "partition_count": 2,
+  "unique_objects": 4,
+  "duplicate_event_preserved_object_bytes": true,
+  "commit_written_last": true,
+  "cloud_deployment_verified": false
+}

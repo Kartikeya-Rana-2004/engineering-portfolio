@@ -1,0 +1,16 @@
+{
+  "execution": "local in-memory S3 adapter on real public data; no AWS deployment",
+  "source": "https://data.cityofnewyork.us/resource/erm2-nwe9.json",
+  "sample": "bounded 12000-record sample, creation-time ordered, Jan 2025",
+  "input_bytes": 2521655,
+  "source_rows": 12000,
+  "accepted": 11998,
+  "rejected": 2,
+  "partitions": [
+    "2025-01-01",
+    "2025-01-02"
+  ],
+  "duplicate_event_byte_stable": true,
+  "commit_written_last": true,
+  "cloud_deployment_verified": false
+}

@@ -1,0 +1,10 @@
+{
+  "verification": "boto3/botocore Stubber request/response validation; no AWS calls",
+  "get_object_requests": 1,
+  "put_object_requests": 4,
+  "versioned_read": true,
+  "explicit_sse_s3_writes": true,
+  "accepted_records": 3,
+  "boto3_version": "1.43.108",
+  "live_deployment_verified": false
+}
