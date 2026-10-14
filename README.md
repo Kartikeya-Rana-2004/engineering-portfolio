@@ -1,6 +1,6 @@
-# Engineering Portfolio: CivicFlow + ContractWatch
+# Engineering Portfolio
 
-Five runnable Python/SQL projects focused on reliable data systems and ML engineering. Python 3.11+. DemandServe uses NumPy; the other offline demos need only the standard library. No cloud account or credentials are needed for local demos.
+Five foundational Python/SQL projects plus SignalWorks, an interactive reliability lab, focused on reliable data systems and ML engineering. Python 3.11+. DemandServe uses NumPy; the other offline demos need only the standard library. No cloud account or credentials are needed for local demos.
 
 
 
@@ -9,6 +9,7 @@ Five runnable Python/SQL projects focused on reliable data systems and ML engine
 | [CivicFlow](docs/civicflow.md) | Public operational data contains corrections and invalid records | Bounded API extraction, immutable raw batches, transactional keyed upserts, quarantine, audit lineage, SQL reporting, offline dashboard |
 | [ContractWatch](docs/contractwatch.md) | Upstream changes silently break downstream consumers | Versioned record contracts, observed-schema profiles, type/missingness drift, machine-readable reports, nonzero exit status on failures |
 | [AWSFlow](docs/awsflow.md) | Cloud events can repeat or fail halfway through a batch | AWS S3/EventBridge/SQS/Lambda pipeline, commit-last manifests, Glue catalog, Athena partition projection, scoped IAM, CloudFormation, CloudWatch alarms |
+| [SignalWorks](docs/signalworks.md) | Reliability failures are hard to explain or reproduce | Eight recorded SQLite experiments, crash/recovery evidence, replay-safe totals and an interactive Anatomy SVG explainer built on LedgerStream |
 | [LedgerStream](docs/ledgerstream.md) | Source changes and events can diverge, or retries can double-count aggregates | Transactional outbox, durable ordered checkpoints, replay detection, dead letters, entity versions, delete tombstones, atomic projection recovery |
 | [DemandServe](docs/demandserve.md) | Model metrics and serving logic can hide leakage or inconsistent features | Chronological evaluation, baseline comparisons, shared train/serve features, versioned ridge artifact, validated HTTP predictions |
 
@@ -79,6 +80,15 @@ python3 scripts/verify_demandserve_api.py
 ```
 
 LedgerStream exercises actual local database transactions on synthetic orders, including an injected crash. DemandServe's trained artifact was evaluated on real historical UCI data and checked through a real loopback HTTP server. Neither is hosted as a production service. Read their project pages for exact technology boundaries and measured outcomes.
+
+## SignalWorks interactive reliability lab
+
+```sh
+python3 scripts/verify_signalworks.py
+python3 -m http.server 8000
+```
+
+Open `http://localhost:8000/demos/signalworks/`. The static browser demo replays recorded local SQLite runs; it does not claim live backend execution. See the [case study](docs/signalworks.md) for source, evidence, controls and limitations.
 
 ## Provenance
 
