@@ -14,7 +14,7 @@ Python 3.11+; standard library only for SignalWorks. From the repository root:
 python3 scripts/verify_signalworks.py
 python3 -m signalworks
 node demos/signalworks/build.mjs
-node --test demos/signalworks/player.test.mjs
+node --test demos/signalworks/*.test.mjs
 python3 -m http.server 8000
 ```
 

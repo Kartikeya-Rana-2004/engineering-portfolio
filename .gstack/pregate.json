@@ -1,0 +1,58 @@
+{
+  "runner": "python3 scripts/test_selected.py {files}",
+  "dependencies": {
+    "signalworks/**": [
+      "tests/test_signalworks.py"
+    ],
+    "scripts/verify_signalworks.py": [
+      "tests/test_signalworks.py"
+    ],
+    "scripts/test_selected.py": [
+      "tests/test_signalworks.py"
+    ],
+    "demos/signalworks/**": [
+      "demos/signalworks/geometry.test.mjs",
+      "demos/signalworks/player.test.mjs",
+      "demos/signalworks/ui.test.mjs"
+    ],
+    "evidence/signalworks-traces.json": [
+      "tests/test_signalworks.py"
+    ],
+    "README.md": [],
+    "docs/**": [],
+    ".gitignore": [],
+    ".github/workflows/**": [
+      "tests/test_signalworks.py",
+      "demos/signalworks/geometry.test.mjs",
+      "demos/signalworks/player.test.mjs",
+      "demos/signalworks/ui.test.mjs"
+    ]
+  },
+  "strays": {
+    "allow": [
+      "demos/**",
+      "signalworks/**",
+      ".gstack/**"
+    ]
+  },
+  "guards": [
+    {
+      "id": "recorded-evidence",
+      "when": [
+        "signalworks/**",
+        "evidence/signalworks-traces.json",
+        "demos/signalworks/**"
+      ],
+      "command": "python3 scripts/verify_signalworks.py",
+      "fix": "Regenerate canonical evidence and demo traces from actual SQLite runs."
+    },
+    {
+      "id": "generated-page",
+      "when": [
+        "demos/signalworks/**"
+      ],
+      "command": "node demos/signalworks/build.mjs && git diff --exit-code -- demos/signalworks/index.html demos/signalworks/traces.json",
+      "fix": "Rebuild and commit generated SVG page and trace asset."
+    }
+  ]
+}
