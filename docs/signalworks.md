@@ -54,6 +54,8 @@ Each experiment creates separate temporary source and sink databases. Event IDs 
 
 Quarantine, conflicting replay and stale entity scenarios deliberately mutate transport envelopes and label those steps `transport_fixture: true`. They do not claim that source validation emitted invalid orders or that the source reused an old version. Source sequence and entity version are distinct ordering mechanisms.
 
+The evidence also records two lower-level checks under `technical_checks`: a failure between the source order write and outbox insertion leaves both tables empty, and an envelope missing routing metadata leaves the sink snapshot unchanged. These checks supplement the eight public replay scenarios.
+
 ## Why the machine looks this way
 
 The infeed parcel represents an event waiting for consumption; inspection represents validation and identity/version checks. The receipt dock represents committed application, the return dock replay/stale rejection, and the separate tray quarantine. A crash keeps the parcel at inspection while the readouts retain the last committed snapshot. This is a metaphor, not an actual deployment topology.

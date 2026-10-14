@@ -50,3 +50,14 @@ class SignalWorksTests(unittest.TestCase):
             steps = self.steps(name)
             self.assertEqual(steps[-2]['state'], steps[-1]['state'])
             self.assertEqual(steps[-1]['disposition'], 'blocked')
+
+class TechnicalEvidenceTests(unittest.TestCase):
+    def test_source_atomicity_and_invalid_routing_have_recorded_evidence(self):
+        checks = build_traces()['technical_checks']
+        source = checks['source_atomicity']
+        self.assertEqual(source['orders_after_failure'], 0)
+        self.assertEqual(source['outbox_after_failure'], 0)
+        self.assertIn('injected failure', source['error'])
+        routing = checks['invalid_routing']
+        self.assertEqual(routing['before'], routing['after'])
+        self.assertIn('routing metadata', routing['error'])

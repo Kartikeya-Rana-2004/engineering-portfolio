@@ -93,6 +93,26 @@ def run_scenario(name, root):
     title, description = TITLES[name]
     return dict(id=name, title=title, description=description, steps=steps)
 
+def technical_checks():
+    """Record lower-level source atomicity and invalid-routing failures separately."""
+    checks = {}
+    with tempfile.TemporaryDirectory() as tmp:
+        source = OutboxSource(Path(tmp) / 'source.sqlite')
+        sink = Projection(Path(tmp) / 'sink.sqlite')
+        try:
+            source.change('atomicity-fixture', dict(order_id='atomicity-fixture', amount_cents=100, status='paid'), fail_after_source=True)
+        except RuntimeError as exc:
+            with sqlite3.connect(source.path) as db:
+                checks['source_atomicity'] = dict(
+                    error=str(exc), orders_after_failure=db.execute('SELECT count(*) FROM orders').fetchone()[0],
+                    outbox_after_failure=db.execute('SELECT count(*) FROM outbox').fetchone()[0])
+        before = snapshot(sink)
+        try:
+            sink.apply([{'op': 'upsert'}])
+        except ValueError as exc:
+            checks['invalid_routing'] = dict(error=str(exc), before=before, after=snapshot(sink))
+    return checks
+
 def build_traces():
     scenarios = []
     for name in TITLES:
@@ -101,4 +121,5 @@ def build_traces():
         with tempfile.TemporaryDirectory() as tmp, patch('ledgerstream.core.uuid.uuid4', side_effect=lambda: UUID(int=next(identifiers))):
             scenarios.append(run_scenario(name, Path(tmp)))
     return dict(schema_version=1, engine='LedgerStream / real local SQLite transactions',
-                disclosure='Interactive replay of a recorded local run using synthetic data.', scenarios=scenarios)
+                disclosure='Interactive replay of a recorded local run using synthetic data.', scenarios=scenarios,
+                technical_checks=technical_checks())

@@ -611,5 +611,33 @@
       "title": "Reject conflicting history"
     }
   ],
-  "schema_version": 1
+  "schema_version": 1,
+  "technical_checks": {
+    "invalid_routing": {
+      "after": {
+        "active_orders": 0,
+        "checkpoint": 0,
+        "entities": [],
+        "paid_cents": 0,
+        "quarantine_count": 0,
+        "receipt_count": 0,
+        "tombstones": 0
+      },
+      "before": {
+        "active_orders": 0,
+        "checkpoint": 0,
+        "entities": [],
+        "paid_cents": 0,
+        "quarantine_count": 0,
+        "receipt_count": 0,
+        "tombstones": 0
+      },
+      "error": "missing routing metadata"
+    },
+    "source_atomicity": {
+      "error": "injected failure before outbox write",
+      "orders_after_failure": 0,
+      "outbox_after_failure": 0
+    }
+  }
 }
