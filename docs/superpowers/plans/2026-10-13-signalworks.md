@@ -8,7 +8,7 @@
 
 **Tech Stack:** Python 3.11+, SQLite, standard-library unittest, HTML/CSS/JavaScript, Anatomy SVG kit, Node for geometry generation and browser checks.
 
-**Spec:** signalworks-design.md, approved by the user.
+**Spec:** [SignalWorks design](../specs/2026-10-13-signalworks-design.md), approved by the user.
 
 ## Global constraints
 - Preserve LedgerStream and unrelated work; cite it as the foundation.
@@ -37,7 +37,7 @@
 - [ ] Run new and existing LedgerStream tests; regenerate twice and compare exact bytes. Commit engine-adapter tests and evidence.
 
 ## Task 2 — Anatomy machine and recorded-run player
-**Files:** Create demos/signalworks/build.mjs, geometry.mjs, index.html, player.js, style.css, traces.json, and a scoped anatomy-kit directory with upstream license.
+**Files:** Create demos/signalworks/build.mjs, geometry.mjs, index.html, player.mjs, style.css, traces.json, and a scoped anatomy-kit directory with upstream license.
 **Consumes:** Task 1 trace schema, with copies generated from the canonical evidence file.
 **Produces:** Static demo at demos/signalworks/index.html; build script regenerates dark/light artwork and trace asset.
 - [ ] Read Anatomy craft, motion, API and verification references and the nearest complete example. Document one-to-one mechanism mapping and 40–80 supported parts before geometry.

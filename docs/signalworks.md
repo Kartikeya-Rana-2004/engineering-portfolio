@@ -2,7 +2,7 @@
 
 A reliability lab built on [LedgerStream](ledgerstream.md), with an Anatomy SVG machine that explains what duplicate delivery, poison records, crashes and replay do to committed data.
 
-**[Open the demo source](../demos/signalworks/index.html)** · [Recorded SQLite evidence](../evidence/signalworks-traces.json) · [Scenario implementation](../signalworks/scenarios.py)
+**[Open the demo source](../demos/signalworks/index.html)** · [Recorded SQLite evidence](../evidence/signalworks-traces.json) · [Scenario implementation](../signalworks/scenarios.py) · [Figure parts](../demos/signalworks/parts.md) · [Design spec](superpowers/specs/2026-10-13-signalworks-design.md) · [Implementation plan](superpowers/plans/2026-10-13-signalworks.md)
 
 The demo is a static website. To interact, serve the repository locally using the command below. GitHub's file viewer shows source; it does not run the website. No public hosting is claimed.
 
