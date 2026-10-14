@@ -1,0 +1,18 @@
+export function createPlayer(traces, onChange, {schedule = fn => setTimeout(fn, 1700), cancel = clearTimeout} = {}) {
+  if (!traces?.scenarios?.length || traces.scenarios.some(s=>!s.id || !s.steps?.length)) throw Error('No recorded scenarios available');
+  let scenario=traces.scenarios[0], index=0, playing=false, timer=null, generation=0, destroyed=false;
+  const state=()=>({scenario,index,playing,step:scenario.steps[index]});
+  const notify=()=>onChange(state());
+  const check=()=>{if(destroyed)throw Error('Player destroyed');};
+  function pause(){generation++;if(timer!==null)cancel(timer);timer=null;playing=false;notify();}
+  function tick(token){if(token!==generation||!playing||destroyed)return;index=Math.min(index+1,scenario.steps.length-1);if(index===scenario.steps.length-1)playing=false;notify();if(playing)timer=schedule(()=>tick(token));}
+  const api={get state(){return state();},
+    select(id){check();const next=traces.scenarios.find(s=>s.id===id);if(!next)throw Error('Unknown scenario');pause();scenario=next;index=0;notify();},
+    step(){check();pause();index=Math.min(index+1,scenario.steps.length-1);notify();},
+    play(){check();pause();if(index===scenario.steps.length-1)index=0;playing=true;notify();const token=generation;timer=schedule(()=>tick(token));},
+    pause,
+    reset(){check();pause();index=0;notify();},
+    destroy(){pause();destroyed=true;}
+  };
+  notify();return api;
+}

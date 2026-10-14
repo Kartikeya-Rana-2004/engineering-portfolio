@@ -24,6 +24,7 @@ jobs:
       - run: python -m awsflow.demo
       - run: python infra/build_awsflow.py
       - run: git diff --exit-code -- infra/awsflow/template.json
+      - run: python scripts/verify_signalworks.py
       - run: python -m ledgerstream
       - run: python scripts/verify_demandserve_api.py
   aws-validation:
@@ -37,3 +38,14 @@ jobs:
       - run: python scripts/verify_aws_sdk.py
       - run: cfn-lint infra/awsflow/template.json
       - run: bash -n scripts/deploy_awsflow.sh
+
+  signalworks-browser-model:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test demos/signalworks/*.test.mjs
+      - run: node demos/signalworks/build.mjs
+      - run: git diff --exit-code -- demos/signalworks/index.html demos/signalworks/traces.json

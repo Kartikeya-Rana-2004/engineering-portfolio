@@ -1,0 +1,615 @@
+{
+  "disclosure": "Interactive replay of a recorded local run using synthetic data.",
+  "engine": "LedgerStream / real local SQLite transactions",
+  "scenarios": [
+    {
+      "description": "Two orders become durable, queryable state.",
+      "id": "success",
+      "steps": [
+        {
+          "disposition": "ready",
+          "event_id": null,
+          "explanation": "Source events are durable in the outbox; the projection has not consumed them yet.",
+          "sequence": null,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": null
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "The order, receipt and checkpoint commit in one sink transaction.",
+          "sequence": 1,
+          "state": {
+            "active_orders": 1,
+            "checkpoint": 1,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              }
+            ],
+            "paid_cents": 5000,
+            "quarantine_count": 0,
+            "receipt_count": 1,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000002",
+          "explanation": "The next source sequence commits. Current paid-order total is $75.00 in synthetic data.",
+          "sequence": 2,
+          "state": {
+            "active_orders": 2,
+            "checkpoint": 2,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              },
+              {
+                "deleted": false,
+                "key": "order-002",
+                "version": 1
+              }
+            ],
+            "paid_cents": 7500,
+            "quarantine_count": 0,
+            "receipt_count": 2,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        }
+      ],
+      "title": "The happy path"
+    },
+    {
+      "description": "Delivery can repeat. Revenue must not.",
+      "id": "duplicate",
+      "steps": [
+        {
+          "disposition": "ready",
+          "event_id": null,
+          "explanation": "Source events are durable in the outbox; the projection has not consumed them yet.",
+          "sequence": null,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": null
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "The order, receipt and checkpoint commit in one sink transaction.",
+          "sequence": 1,
+          "state": {
+            "active_orders": 1,
+            "checkpoint": 1,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              }
+            ],
+            "paid_cents": 5000,
+            "quarantine_count": 0,
+            "receipt_count": 1,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        },
+        {
+          "disposition": "replayed",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "Exact envelope already has a receipt: no second write and no extra revenue.",
+          "sequence": 1,
+          "state": {
+            "active_orders": 1,
+            "checkpoint": 1,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              }
+            ],
+            "paid_cents": 5000,
+            "quarantine_count": 0,
+            "receipt_count": 1,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        }
+      ],
+      "title": "Deliver it twice"
+    },
+    {
+      "description": "Isolate bad data and let the next valid event through.",
+      "id": "quarantine",
+      "steps": [
+        {
+          "disposition": "ready",
+          "event_id": null,
+          "explanation": "Source events are durable in the outbox; the projection has not consumed them yet.",
+          "sequence": null,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": null
+        },
+        {
+          "disposition": "quarantined",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "Transport fixture: a negative amount is quarantined, with its receipt and checkpoint committed.",
+          "sequence": 1,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 1,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 1,
+            "receipt_count": 1,
+            "tombstones": 0
+          },
+          "transport_fixture": true,
+          "version": 1
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000002",
+          "explanation": "The next valid order commits; the poison record does not block progress.",
+          "sequence": 2,
+          "state": {
+            "active_orders": 1,
+            "checkpoint": 2,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-002",
+                "version": 1
+              }
+            ],
+            "paid_cents": 2500,
+            "quarantine_count": 1,
+            "receipt_count": 2,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        }
+      ],
+      "title": "Catch a poison record"
+    },
+    {
+      "description": "A checkpoint is only useful when it commits with the data.",
+      "id": "recovery",
+      "steps": [
+        {
+          "disposition": "ready",
+          "event_id": null,
+          "explanation": "Source events are durable in the outbox; the projection has not consumed them yet.",
+          "sequence": null,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": null
+        },
+        {
+          "disposition": "rolled_back",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "injected projection crash. The first write, its receipt and checkpoint all rolled back.",
+          "sequence": 1,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "Reopened the SQLite projection and resumed from its committed checkpoint.",
+          "sequence": 1,
+          "state": {
+            "active_orders": 1,
+            "checkpoint": 1,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              }
+            ],
+            "paid_cents": 5000,
+            "quarantine_count": 0,
+            "receipt_count": 1,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000002",
+          "explanation": "Reopened the SQLite projection and resumed from its committed checkpoint.",
+          "sequence": 2,
+          "state": {
+            "active_orders": 2,
+            "checkpoint": 2,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              },
+              {
+                "deleted": false,
+                "key": "order-002",
+                "version": 1
+              }
+            ],
+            "paid_cents": 7500,
+            "quarantine_count": 0,
+            "receipt_count": 2,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        }
+      ],
+      "title": "Crash. Roll back. Recover."
+    },
+    {
+      "description": "Reprocessing history leaves the current totals unchanged.",
+      "id": "replay",
+      "steps": [
+        {
+          "disposition": "ready",
+          "event_id": null,
+          "explanation": "Source events are durable in the outbox; the projection has not consumed them yet.",
+          "sequence": null,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": null
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "The order, receipt and checkpoint commit in one sink transaction.",
+          "sequence": 1,
+          "state": {
+            "active_orders": 1,
+            "checkpoint": 1,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              }
+            ],
+            "paid_cents": 5000,
+            "quarantine_count": 0,
+            "receipt_count": 1,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000002",
+          "explanation": "The next source sequence commits. Current paid-order total is $75.00 in synthetic data.",
+          "sequence": 2,
+          "state": {
+            "active_orders": 2,
+            "checkpoint": 2,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              },
+              {
+                "deleted": false,
+                "key": "order-002",
+                "version": 1
+              }
+            ],
+            "paid_cents": 7500,
+            "quarantine_count": 0,
+            "receipt_count": 2,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        },
+        {
+          "disposition": "replayed",
+          "event_id": "00000000000000000000000000000002",
+          "explanation": "Replayed 2 exact envelopes. All committed state is unchanged.",
+          "sequence": 2,
+          "state": {
+            "active_orders": 2,
+            "checkpoint": 2,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              },
+              {
+                "deleted": false,
+                "key": "order-002",
+                "version": 1
+              }
+            ],
+            "paid_cents": 7500,
+            "quarantine_count": 0,
+            "receipt_count": 2,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        }
+      ],
+      "title": "Replay the entire batch"
+    },
+    {
+      "description": "An older entity version must not resurrect an order.",
+      "id": "tombstone",
+      "steps": [
+        {
+          "disposition": "ready",
+          "event_id": null,
+          "explanation": "Source events are durable in the outbox; the projection has not consumed them yet.",
+          "sequence": null,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": null
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "The order, receipt and checkpoint commit in one sink transaction.",
+          "sequence": 1,
+          "state": {
+            "active_orders": 1,
+            "checkpoint": 1,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              }
+            ],
+            "paid_cents": 5000,
+            "quarantine_count": 0,
+            "receipt_count": 1,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000002",
+          "explanation": "Deletion retains entity version 2 as a tombstone.",
+          "sequence": 2,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 2,
+            "entities": [
+              {
+                "deleted": true,
+                "key": "order-001",
+                "version": 2
+              }
+            ],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 2,
+            "tombstones": 1
+          },
+          "transport_fixture": false,
+          "version": 2
+        },
+        {
+          "disposition": "stale",
+          "event_id": "stale-transport-fixture",
+          "explanation": "Transport fixture: a new stream sequence carries old entity version 1; tombstone version 2 wins.",
+          "sequence": 3,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 3,
+            "entities": [
+              {
+                "deleted": true,
+                "key": "order-001",
+                "version": 2
+              }
+            ],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 3,
+            "tombstones": 1
+          },
+          "transport_fixture": true,
+          "version": 1
+        }
+      ],
+      "title": "Keep a deletion deleted"
+    },
+    {
+      "description": "Never advance a checkpoint past an unseen event.",
+      "id": "gap",
+      "steps": [
+        {
+          "disposition": "ready",
+          "event_id": null,
+          "explanation": "Source events are durable in the outbox; the projection has not consumed them yet.",
+          "sequence": null,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": null
+        },
+        {
+          "disposition": "blocked",
+          "event_id": "00000000000000000000000000000002",
+          "explanation": "gap or out-of-order sequence; checkpoint cannot skip events",
+          "sequence": 2,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        }
+      ],
+      "title": "Refuse a sequence gap"
+    },
+    {
+      "description": "The same sequence cannot quietly change its meaning.",
+      "id": "conflict",
+      "steps": [
+        {
+          "disposition": "ready",
+          "event_id": null,
+          "explanation": "Source events are durable in the outbox; the projection has not consumed them yet.",
+          "sequence": null,
+          "state": {
+            "active_orders": 0,
+            "checkpoint": 0,
+            "entities": [],
+            "paid_cents": 0,
+            "quarantine_count": 0,
+            "receipt_count": 0,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": null
+        },
+        {
+          "disposition": "applied",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "The order, receipt and checkpoint commit in one sink transaction.",
+          "sequence": 1,
+          "state": {
+            "active_orders": 1,
+            "checkpoint": 1,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              }
+            ],
+            "paid_cents": 5000,
+            "quarantine_count": 0,
+            "receipt_count": 1,
+            "tombstones": 0
+          },
+          "transport_fixture": false,
+          "version": 1
+        },
+        {
+          "disposition": "blocked",
+          "event_id": "00000000000000000000000000000001",
+          "explanation": "conflicting event at existing sequence",
+          "sequence": 1,
+          "state": {
+            "active_orders": 1,
+            "checkpoint": 1,
+            "entities": [
+              {
+                "deleted": false,
+                "key": "order-001",
+                "version": 1
+              }
+            ],
+            "paid_cents": 5000,
+            "quarantine_count": 0,
+            "receipt_count": 1,
+            "tombstones": 0
+          },
+          "transport_fixture": true,
+          "version": 1
+        }
+      ],
+      "title": "Reject conflicting history"
+    }
+  ],
+  "schema_version": 1
+}
