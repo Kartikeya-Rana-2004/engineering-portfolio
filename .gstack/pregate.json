@@ -1,5 +1,5 @@
 {
-  "runner": "python3 scripts/test_selected.py {files}",
+  "runner": "python3 scripts/run_selected_checks.py {files}",
   "dependencies": {
     "signalworks/**": [
       "tests/test_signalworks.py"
@@ -7,7 +7,7 @@
     "scripts/verify_signalworks.py": [
       "tests/test_signalworks.py"
     ],
-    "scripts/test_selected.py": [
+    "scripts/run_selected_checks.py": [
       "tests/test_signalworks.py"
     ],
     "demos/signalworks/**": [
