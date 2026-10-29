@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Engineering Portfolio | Kartikeya Rana</title>
-  <meta name="description" content="Production-grade data engineering, distributed systems, lakehouse pipelines, and ML systems portfolio by Kartikeya Rana.">
+  <title>Kartikeya Rana — Data Engineering & Distributed Systems</title>
+  <meta name="description" content="Production-grade distributed data pipelines, transactional outbox CDC, schema drift detection, and ML inference systems by Kartikeya Rana.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=IBM+Plex+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,31 +17,25 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#f0fdfa',
-              400: '#2dd4bf',
-              500: '#14b8a6',
-              600: '#0d9488',
-            },
-            dark: {
-              950: '#06090e',
-              900: '#0b0f17',
-              800: '#111827',
-              700: '#1f2937',
-              600: '#374151'
+            surface: {
+              base: '#0c1017',
+              panel: '#151b24',
+              subtle: '#1b2330',
+              border: 'rgba(255, 255, 255, 0.08)',
+              hover: 'rgba(255, 255, 255, 0.03)'
             },
             accent: {
-              cyan: '#06b6d4',
-              blue: '#3b82f6',
-              purple: '#8b5cf6',
               emerald: '#10b981',
-              amber: '#f59e0b',
-              rose: '#f43f5e'
+              teal: '#0d9488',
+              blue: '#2563eb',
+              amber: '#d97706',
+              crimson: '#e11d48'
             }
           },
           fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
+            display: ['"Outfit"', 'sans-serif'],
+            sans: ['"DM Sans"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
           }
         }
       }
@@ -49,301 +43,313 @@
   </script>
   <style>
     body {
-      background-color: #06090e;
-      color: #f3f4f6;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0c1017;
+      color: #e2e8f0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9375rem;
+      line-height: 1.6;
     }
-    .glass-panel {
-      background: rgba(17, 24, 39, 0.75);
-      backdrop-filter: blur(16px);
+    h1 { font-size: 2.25rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+    h2 { font-size: 1.75rem; font-weight: 700; line-height: 1.25; letter-spacing: -0.015em; }
+    h3 { font-size: 1.25rem; font-weight: 600; line-height: 1.3; }
+    h4 { font-size: 1rem; font-weight: 600; }
+    ::selection {
+      background-color: #10b981;
+      color: #0c1017;
+    }
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0c1017;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2937;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #374151;
+    }
+    .panel {
+      background-color: #151b24;
       border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 2rem;
     }
-    .glass-panel:hover {
-      border-color: rgba(45, 212, 191, 0.25);
+    .panel:hover {
+      border-color: rgba(255, 255, 255, 0.14);
     }
-    .glow-cyan {
-      box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.25);
-    }
-    .glow-purple {
-      box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.25);
+    .section-block {
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
     }
     .tab-btn.active {
-      background: rgba(45, 212, 191, 0.15);
-      color: #2dd4bf;
-      border-color: #2dd4bf;
+      background-color: #1b2330;
+      color: #10b981;
+      border-color: rgba(16, 185, 129, 0.35);
     }
-    .badge-pill {
+    .tabular {
+      font-variant-numeric: tabular-nums;
+    }
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 0.375rem;
-      padding: 0.25rem 0.65rem;
-      border-radius: 9999px;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
       font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 0.025em;
-    }
-    pre, code {
-      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.02em;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col selection:bg-brand-500 selection:text-black">
+<body class="min-h-screen flex flex-col">
 
-  <!-- Top Announcement Bar -->
-  <div class="bg-gradient-to-r from-teal-900/60 via-dark-900 to-indigo-950/60 border-b border-teal-500/20 px-4 py-2 text-xs text-center text-teal-300 flex items-center justify-center gap-2">
-    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-    <span><strong>Live Systems Explorer:</strong> 5 production-grade data pipelines, transaction protocols, and ML serving systems running live in-browser.</span>
-    <span class="hidden md:inline text-dark-600">•</span>
-    <a href="https://github.com/Kartikeya-Rana-2004/engineering-portfolio" target="_blank" class="underline hover:text-white font-semibold">View Source on GitHub →</a>
+  <!-- Top Informational Strip -->
+  <div class="border-b border-surface-border bg-surface-base px-6 py-2.5 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-accent-emerald"></span>
+        <span class="font-medium text-slate-300">Live Production Systems Explorer</span>
+        <span class="text-slate-600">•</span>
+        <span>5 offline verifiable data & ML pipelines</span>
+      </div>
+      <div class="flex items-center gap-4 text-xs font-mono">
+        <span class="text-slate-400">Python 3.11+</span>
+        <span class="text-slate-600">•</span>
+        <span class="text-accent-emerald">63/63 Tests Passing</span>
+        <span class="text-slate-600">•</span>
+        <a href="https://github.com/Kartikeya-Rana-2004/engineering-portfolio" target="_blank" class="text-slate-300 hover:text-white underline font-semibold">Source Repo →</a>
+      </div>
+    </div>
   </div>
 
-  <!-- Navigation Header -->
-  <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-4">
+  <!-- Header -->
+  <header class="border-b border-surface-border bg-surface-base/95 backdrop-blur-md px-6 py-5 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-4">
-        <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-teal-400 to-blue-600 flex items-center justify-center font-bold text-black text-xl shadow-lg shadow-teal-500/20">
+        <div class="w-10 h-10 rounded-lg bg-surface-subtle border border-surface-border flex items-center justify-center font-display font-bold text-white text-base">
           KR
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-lg font-bold text-white tracking-tight">Kartikeya Rana</h1>
-            <span class="badge-pill bg-teal-500/10 text-teal-300 border border-teal-500/30">Data Engineer</span>
-            <span class="badge-pill bg-purple-500/10 text-purple-300 border border-purple-500/30">Penn State '26</span>
+          <div class="flex items-center gap-3">
+            <h1 class="text-xl font-display font-bold text-white tracking-tight">Kartikeya Rana</h1>
+            <span class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Data Engineer</span>
+            <span class="badge bg-slate-800 text-slate-300 border border-slate-700">Penn State '26</span>
           </div>
-          <p class="text-xs text-gray-400">Distributed Lakehouses • Medallion Pipelines • Reliable Ingestion Systems</p>
+          <p class="text-xs text-slate-400 mt-0.5">Distributed Lakehouses • Medallion Ingestion • High-Reliability Systems</p>
         </div>
       </div>
 
-      <div class="flex items-center flex-wrap gap-2 text-sm">
-        <a href="https://kartikeya-rana-2004.github.io/market-trend-forecast/" target="_blank" class="px-3 py-1.5 rounded-lg bg-dark-800 hover:bg-dark-700 text-teal-300 border border-teal-500/30 text-xs font-semibold flex items-center gap-1.5 transition">
-          <i class="fa-solid fa-chart-line"></i> Market Forecast
+      <nav class="flex items-center flex-wrap gap-2 text-xs">
+        <a href="https://kartikeya-rana-2004.github.io/market-trend-forecast/" target="_blank" class="px-3 py-1.5 rounded-lg bg-surface-panel hover:bg-surface-subtle text-slate-200 border border-surface-border font-medium transition flex items-center gap-1.5">
+          <i class="fa-solid fa-chart-line text-emerald-400"></i> Market Forecast
         </a>
-        <a href="https://github.com/Kartikeya-Rana-2004" target="_blank" class="px-3 py-1.5 rounded-lg bg-dark-800 hover:bg-dark-700 text-gray-200 border border-white/10 text-xs font-semibold flex items-center gap-1.5 transition">
-          <i class="fa-brands fa-github"></i> GitHub Profile
+        <a href="https://kartikeya-rana-2004.github.io/Adventure-works-dataset-project/" target="_blank" class="px-3 py-1.5 rounded-lg bg-surface-panel hover:bg-surface-subtle text-slate-200 border border-surface-border font-medium transition flex items-center gap-1.5">
+          <i class="fa-solid fa-layer-group text-blue-400"></i> Azure Lakehouse
         </a>
-        <a href="https://linkedin.com/in/kartikeyarana2004" target="_blank" class="px-3 py-1.5 rounded-lg bg-blue-900/30 hover:bg-blue-800/40 text-blue-300 border border-blue-500/30 text-xs font-semibold flex items-center gap-1.5 transition">
+        <a href="https://kartikeya-rana-2004.github.io/TrueCost/" target="_blank" class="px-3 py-1.5 rounded-lg bg-surface-panel hover:bg-surface-subtle text-slate-200 border border-surface-border font-medium transition flex items-center gap-1.5">
+          <i class="fa-solid fa-server text-indigo-400"></i> Roar HPC
+        </a>
+        <a href="https://linkedin.com/in/kartikeyarana2004" target="_blank" class="px-3 py-1.5 rounded-lg bg-blue-600/15 hover:bg-blue-600/25 text-blue-300 border border-blue-500/30 font-medium transition flex items-center gap-1.5">
           <i class="fa-brands fa-linkedin"></i> LinkedIn
         </a>
-        <a href="mailto:kartikeyarana2004@gmail.com" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-black text-xs font-bold flex items-center gap-1.5 shadow-md transition">
+        <a href="mailto:kartikeyarana2004@gmail.com" class="px-3.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-black font-bold transition flex items-center gap-1.5">
           <i class="fa-solid fa-paper-plane"></i> Contact
         </a>
-      </div>
+      </nav>
     </div>
   </header>
 
-  <!-- Hero & Verification Banner -->
+  <!-- Hero Overview Panel -->
   <section class="max-w-7xl mx-auto px-6 pt-8 pb-4 w-full">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-      <div class="lg:col-span-8 p-6 rounded-2xl glass-panel relative overflow-hidden flex flex-col justify-between">
-        <div class="absolute -right-16 -top-16 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        <div>
-          <div class="flex items-center gap-2 mb-3">
-            <span class="badge-pill bg-teal-500/15 text-teal-300 border border-teal-500/30">
-              <i class="fa-solid fa-shield-halved"></i> 100% Deterministic Verification
+    <div class="panel p-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 space-y-4">
+          <div class="flex items-center gap-2">
+            <span class="badge bg-slate-800 text-slate-300 border border-slate-700 font-mono text-[11px]">
+              Offline Verifiable Architecture
             </span>
-            <span class="badge-pill bg-blue-500/15 text-blue-300 border border-blue-500/30">
-              <i class="fa-solid fa-flask"></i> 63 / 63 Unit Tests Passing
+            <span class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono text-[11px]">
+              Zero Cloud Costs
             </span>
           </div>
-          <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight mb-2">
-            Engineering Systems for Zero-Loss Ingestion & Distributed Reliability
+
+          <h2 class="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight leading-tight">
+            Reliable Data Systems for Critical Ingestion & Serving
           </h2>
-          <p class="text-sm text-gray-300 leading-relaxed max-w-3xl">
-            A portfolio of production-engineered systems addressing core data infrastructure failure modes: silent upstream schema mutation, double-counting in event streaming, unhandled partial cloud batch failures, and training-serving leakage. Built with Python 3.11+, SQLite ACID guarantees, and zero-cloud-cost local reproducibility.
+
+          <p class="text-sm text-slate-300 leading-relaxed max-w-2xl">
+            A production-grade implementation resolving the core failure modes of distributed data infrastructure: silent schema mutation, outbox dual-write inconsistency, partial cloud batch failures, and temporal lookahead leakage. Built with Python 3.11+, SQLite ACID guarantees, and automated verification.
           </p>
-        </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 pt-5 border-t border-white/10 text-center">
-          <div>
-            <div class="text-xl font-extrabold text-teal-400 font-mono">0.00%</div>
-            <div class="text-xs text-gray-400 font-medium">Data Loss (Idempotent)</div>
-          </div>
-          <div>
-            <div class="text-xl font-extrabold text-blue-400 font-mono">100%</div>
-            <div class="text-xs text-gray-400 font-medium">Replay Deduplication</div>
-          </div>
-          <div>
-            <div class="text-xl font-extrabold text-purple-400 font-mono">&lt; 10 ms</div>
-            <div class="text-xs text-gray-400 font-medium">Inference Latency</div>
-          </div>
-          <div>
-            <div class="text-xl font-extrabold text-emerald-400 font-mono">63 / 63</div>
-            <div class="text-xs text-gray-400 font-medium">Automated CI Tests</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Quick Executive Summary Card -->
-      <div class="lg:col-span-4 p-6 rounded-2xl glass-panel flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Candidate Profile</span>
-            <span class="inline-flex items-center gap-1 text-xs text-emerald-400"><i class="fa-solid fa-circle text-[8px]"></i> Available Jan 2027</span>
-          </div>
-          <h3 class="text-lg font-bold text-white mb-2">Kartikeya Rana</h3>
-          <p class="text-xs text-gray-300 leading-relaxed mb-4">
-            Senior in Applied Data Science at Penn State University. Former Data Science Intern at Fornax (eliminated ETL bottlenecks, saving 12 engineering hours/week).
-          </p>
-          <div class="space-y-2 text-xs">
-            <div class="flex items-center justify-between py-1 border-b border-white/5">
-              <span class="text-gray-400">Core Disciplines:</span>
-              <span class="text-gray-200 font-medium">Lakehouses, Outbox CDC, ETL</span>
-            </div>
-            <div class="flex items-center justify-between py-1 border-b border-white/5">
-              <span class="text-gray-400">Stack:</span>
-              <span class="text-gray-200 font-medium">Databricks, PySpark, dbt, SQL, Python</span>
-            </div>
-            <div class="flex items-center justify-between py-1">
-              <span class="text-gray-400">HPC & Cloud:</span>
-              <span class="text-gray-200 font-medium">Penn State Roar Supercomputer, AWS, Azure</span>
-            </div>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <a href="https://github.com/Kartikeya-Rana-2004/engineering-portfolio/blob/main/README.md" target="_blank" class="px-4 py-2 rounded-lg bg-surface-subtle hover:bg-surface-border text-slate-200 border border-surface-border text-xs font-semibold flex items-center gap-2 transition">
+              <i class="fa-solid fa-file-lines text-slate-400"></i> Read Technical Specs
+            </a>
+            <a href="https://github.com/Kartikeya-Rana-2004" target="_blank" class="px-4 py-2 rounded-lg bg-surface-subtle hover:bg-surface-border text-slate-200 border border-surface-border text-xs font-semibold flex items-center gap-2 transition">
+              <i class="fa-brands fa-github text-slate-400"></i> GitHub Profile
+            </a>
           </div>
         </div>
 
-        <div class="mt-4 pt-3 border-t border-white/10 flex gap-2">
-          <a href="https://github.com/Kartikeya-Rana-2004/engineering-portfolio/blob/main/README.md" target="_blank" class="flex-1 py-2 rounded-lg bg-dark-800 hover:bg-dark-700 text-teal-300 border border-teal-500/30 text-xs font-semibold text-center transition">
-            <i class="fa-solid fa-book-open mr-1"></i> Technical Specs
-          </a>
-          <a href="https://github.com/Kartikeya-Rana-2004/market-trend-forecast" target="_blank" class="flex-1 py-2 rounded-lg bg-dark-800 hover:bg-dark-700 text-blue-300 border border-blue-500/30 text-xs font-semibold text-center transition">
-            <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Market Engine
-          </a>
+        <!-- Metric Strips (No nested cards) -->
+        <div class="lg:col-span-4 lg:border-l border-surface-border lg:pl-8 space-y-5">
+          <div class="flex justify-between items-baseline border-b border-surface-border pb-3">
+            <span class="text-xs text-slate-400 font-medium">Replay Data Loss</span>
+            <span class="text-2xl font-mono font-bold text-emerald-400 tabular">0.00%</span>
+          </div>
+          <div class="flex justify-between items-baseline border-b border-surface-border pb-3">
+            <span class="text-xs text-slate-400 font-medium">Deduplication Invariant</span>
+            <span class="text-2xl font-mono font-bold text-white tabular">100.0%</span>
+          </div>
+          <div class="flex justify-between items-baseline border-b border-surface-border pb-3">
+            <span class="text-xs text-slate-400 font-medium">Inference Response Latency</span>
+            <span class="text-2xl font-mono font-bold text-blue-400 tabular">&lt; 10 ms</span>
+          </div>
+          <div class="flex justify-between items-baseline">
+            <span class="text-xs text-slate-400 font-medium">CI Regression Tests</span>
+            <span class="text-2xl font-mono font-bold text-emerald-400 tabular">63 / 63 PASS</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Navigation Tabs -->
+  <!-- Interactive System Tabs -->
   <section class="max-w-7xl mx-auto px-6 py-4 w-full">
-    <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-white/10 no-scrollbar">
-      <button onclick="switchTab('civicflow')" id="tab-btn-civicflow" class="tab-btn active px-4 py-2.5 rounded-xl border border-transparent font-semibold text-sm flex items-center gap-2 whitespace-nowrap transition">
-        <i class="fa-solid fa-network-wired"></i> CivicFlow (Medallion Pipeline)
+    <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-surface-border no-scrollbar">
+      <button onclick="switchTab('civicflow')" id="tab-btn-civicflow" class="tab-btn active px-4 py-2.5 rounded-lg border border-transparent font-medium text-xs flex items-center gap-2 whitespace-nowrap transition">
+        <i class="fa-solid fa-database"></i> CivicFlow (Medallion Pipeline)
       </button>
-      <button onclick="switchTab('contractwatch')" id="tab-btn-contractwatch" class="tab-btn px-4 py-2.5 rounded-xl border border-transparent font-semibold text-sm flex items-center gap-2 whitespace-nowrap transition text-gray-400 hover:text-white">
-        <i class="fa-solid fa-file-contract"></i> ContractWatch (Schema Drift)
+      <button onclick="switchTab('contractwatch')" id="tab-btn-contractwatch" class="tab-btn px-4 py-2.5 rounded-lg border border-transparent font-medium text-xs flex items-center gap-2 whitespace-nowrap transition text-slate-400 hover:text-white">
+        <i class="fa-solid fa-shield-halved"></i> ContractWatch (Schema Drift)
       </button>
-      <button onclick="switchTab('awsflow')" id="tab-btn-awsflow" class="tab-btn px-4 py-2.5 rounded-xl border border-transparent font-semibold text-sm flex items-center gap-2 whitespace-nowrap transition text-gray-400 hover:text-white">
+      <button onclick="switchTab('awsflow')" id="tab-btn-awsflow" class="tab-btn px-4 py-2.5 rounded-lg border border-transparent font-medium text-xs flex items-center gap-2 whitespace-nowrap transition text-slate-400 hover:text-white">
         <i class="fa-solid fa-cloud"></i> AWSFlow (Cloud Architecture)
       </button>
-      <button onclick="switchTab('ledgerstream')" id="tab-btn-ledgerstream" class="tab-btn px-4 py-2.5 rounded-xl border border-transparent font-semibold text-sm flex items-center gap-2 whitespace-nowrap transition text-gray-400 hover:text-white">
-        <i class="fa-solid fa-receipt"></i> LedgerStream (Transactional Outbox)
+      <button onclick="switchTab('ledgerstream')" id="tab-btn-ledgerstream" class="tab-btn px-4 py-2.5 rounded-lg border border-transparent font-medium text-xs flex items-center gap-2 whitespace-nowrap transition text-slate-400 hover:text-white">
+        <i class="fa-solid fa-receipt"></i> LedgerStream (Outbox Pattern)
       </button>
-      <button onclick="switchTab('demandserve')" id="tab-btn-demandserve" class="tab-btn px-4 py-2.5 rounded-xl border border-transparent font-semibold text-sm flex items-center gap-2 whitespace-nowrap transition text-gray-400 hover:text-white">
-        <i class="fa-solid fa-microchip"></i> DemandServe (ML Inference)
+      <button onclick="switchTab('demandserve')" id="tab-btn-demandserve" class="tab-btn px-4 py-2.5 rounded-lg border border-transparent font-medium text-xs flex items-center gap-2 whitespace-nowrap transition text-slate-400 hover:text-white">
+        <i class="fa-solid fa-network-wired"></i> DemandServe (ML Inference)
       </button>
     </div>
   </section>
 
-  <!-- TAB CONTENT CONTAINERS -->
+  <!-- Tab Content Area -->
   <main class="max-w-7xl mx-auto px-6 py-4 w-full flex-1">
 
     <!-- ==================== TAB 1: CIVICFLOW ==================== -->
     <div id="tab-civicflow" class="tab-content block space-y-6">
-      <div class="p-6 rounded-2xl glass-panel">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
+      <div class="panel p-8 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-surface-border">
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <h3 class="text-xl font-bold text-white">CivicFlow: Resilient Ingestion & Medallion Pipeline</h3>
-              <span class="badge-pill bg-teal-500/10 text-teal-300 border border-teal-500/30">Medallion Ingestion</span>
+              <h3 class="text-xl font-display font-bold text-white">CivicFlow: Resilient Ingestion & Medallion Pipeline</h3>
+              <span class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Medallion ETL</span>
             </div>
-            <p class="text-xs text-gray-400">Extracts public NYC 311 operational data, writes immutable Bronze batches, validates data contracts, executes idempotent Silver upserts, and aggregates Gold daily service metrics.</p>
+            <p class="text-xs text-slate-400">Extracts operational data, writes immutable Bronze raw batches, validates schemas, executes idempotent Silver upserts, and computes Gold daily resolution metrics.</p>
           </div>
           <div class="flex flex-wrap gap-2">
-            <button onclick="runCivicFlowDemo('clean')" class="px-3.5 py-2 rounded-lg bg-teal-500 hover:bg-teal-400 text-black text-xs font-bold flex items-center gap-1.5 transition shadow">
+            <button onclick="runCivicFlowDemo('clean')" class="px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-black text-xs font-bold transition flex items-center gap-1.5">
               <i class="fa-solid fa-play"></i> Ingest Clean Batch
             </button>
-            <button onclick="runCivicFlowDemo('quarantine')" class="px-3.5 py-2 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center gap-1.5 transition">
+            <button onclick="runCivicFlowDemo('quarantine')" class="px-3.5 py-2 rounded-lg bg-surface-subtle hover:bg-surface-border text-amber-300 border border-amber-500/30 text-xs font-semibold transition flex items-center gap-1.5">
               <i class="fa-solid fa-triangle-exclamation"></i> Ingest Malformed Batch
             </button>
-            <button onclick="runCivicFlowDemo('replay')" class="px-3.5 py-2 rounded-lg bg-dark-800 hover:bg-dark-700 text-gray-200 border border-white/10 text-xs font-bold flex items-center gap-1.5 transition">
+            <button onclick="runCivicFlowDemo('replay')" class="px-3.5 py-2 rounded-lg bg-surface-subtle hover:bg-surface-border text-slate-200 border border-surface-border text-xs font-semibold transition flex items-center gap-1.5">
               <i class="fa-solid fa-rotate-right"></i> Replay (Idempotency Test)
             </button>
           </div>
         </div>
 
-        <!-- Architecture Flow Banner -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 my-6 text-center text-xs">
-          <div class="p-3 rounded-xl bg-dark-900 border border-white/5">
-            <div class="text-teal-400 font-mono font-bold mb-1">1. Bronze Landing</div>
-            <div class="text-gray-400 text-[11px]">Append-only raw batch JSONL with SHA-256 manifest & watermark.</div>
+        <!-- 4 Architecture Stages (Flattened, no nested cards) -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 p-5 bg-surface-base/60 rounded-xl border border-surface-border text-xs">
+          <div>
+            <span class="font-mono text-emerald-400 font-bold block mb-1">1. Bronze Landing</span>
+            <p class="text-slate-400 text-[11px] leading-relaxed">Raw batch JSONL stored with SHA-256 digest and explicit time-boundary watermark.</p>
           </div>
-          <div class="p-3 rounded-xl bg-dark-900 border border-white/5">
-            <div class="text-amber-400 font-mono font-bold mb-1">2. Quality Gate</div>
-            <div class="text-gray-400 text-[11px]">ContractWatch check; >5% malformed triggers atomic batch quarantine.</div>
+          <div>
+            <span class="font-mono text-amber-400 font-bold block mb-1">2. Quality Gate</span>
+            <p class="text-slate-400 text-[11px] leading-relaxed">ContractWatch inspection; batches with &gt;5% errors quarantined atomically.</p>
           </div>
-          <div class="p-3 rounded-xl bg-dark-900 border border-white/5">
-            <div class="text-blue-400 font-mono font-bold mb-1">3. Silver Keyed Upsert</div>
-            <div class="text-gray-400 text-[11px]">Content-hash comparison prevents duplicate writes; status updates in place.</div>
+          <div>
+            <span class="font-mono text-blue-400 font-bold block mb-1">3. Silver Keyed Upsert</span>
+            <p class="text-slate-400 text-[11px] leading-relaxed">Content-hash comparison prevents duplicate disk writes; updates status in place.</p>
           </div>
-          <div class="p-3 rounded-xl bg-dark-900 border border-white/5">
-            <div class="text-purple-400 font-mono font-bold mb-1">4. Gold Reporting View</div>
-            <div class="text-gray-400 text-[11px]">Reconciled daily service metrics by agency, borough, and resolution SLA.</div>
+          <div>
+            <span class="font-mono text-slate-300 font-bold block mb-1">4. Gold Aggregate View</span>
+            <p class="text-slate-400 text-[11px] leading-relaxed">Aggregated daily SLA metrics by agency, borough, and resolution timeframe.</p>
           </div>
         </div>
 
-        <!-- Pipeline Execution Status Box -->
-        <div id="cf-log-box" class="p-4 rounded-xl bg-dark-950 border border-teal-500/20 font-mono text-xs text-teal-300 mb-6 flex items-center justify-between">
+        <!-- Execution Status Strip -->
+        <div id="cf-log-box" class="p-4 rounded-xl bg-surface-base border border-surface-border text-xs font-mono flex items-center justify-between text-slate-300">
           <div class="flex items-center gap-2">
-            <i class="fa-solid fa-circle-check text-emerald-400"></i>
-            <span id="cf-log-message">Ready: Ingested initial NYC 311 sample batch (3 source records, 0 quarantined, 3 silver rows).</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span id="cf-log-message">Ready: Ingested initial NYC 311 batch (3 source records, 0 quarantined, 3 silver rows).</span>
           </div>
-          <span id="cf-log-badge" class="badge-pill bg-emerald-500/20 text-emerald-300">Status: Completed</span>
+          <span id="cf-log-badge" class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Status: Verified</span>
         </div>
 
-        <!-- Live Metrics Cards -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-          <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-            <span class="text-xs text-gray-400">Accepted Requests</span>
-            <div id="cf-total-records" class="text-2xl font-bold text-white mt-1 font-mono">1,842</div>
-            <span class="text-[10px] text-teal-400">100% Schema Compliant</span>
+        <!-- Live Metrics Row -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+          <div class="border-b md:border-b-0 md:border-r border-surface-border pb-3 md:pb-0 pr-4">
+            <span class="text-xs text-slate-400 uppercase tracking-wider font-medium">Accepted Records</span>
+            <div id="cf-total-records" class="text-2xl font-display font-bold text-white mt-1 tabular">1,842</div>
+            <span class="text-[11px] text-emerald-400 font-medium">100% Invariant Conformance</span>
           </div>
-          <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-            <span class="text-xs text-gray-400">Quarantined Records</span>
-            <div id="cf-quarantined" class="text-2xl font-bold text-amber-400 mt-1 font-mono">0</div>
-            <span class="text-[10px] text-gray-400">Isolated in Dead-Letter</span>
+          <div class="border-b md:border-b-0 md:border-r border-surface-border pb-3 md:pb-0 pr-4">
+            <span class="text-xs text-slate-400 uppercase tracking-wider font-medium">Quarantined Records</span>
+            <div id="cf-quarantined" class="text-2xl font-display font-bold text-amber-400 mt-1 tabular">0</div>
+            <span class="text-[11px] text-slate-400">Dead-Letter Table Isolation</span>
           </div>
-          <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-            <span class="text-xs text-gray-400">Mean Resolution Hours</span>
-            <div id="cf-mean-hours" class="text-2xl font-bold text-blue-400 mt-1 font-mono">4.8 hrs</div>
-            <span class="text-[10px] text-gray-400">Across Closed Cases</span>
+          <div class="border-b md:border-b-0 md:border-r border-surface-border pb-3 md:pb-0 pr-4">
+            <span class="text-xs text-slate-400 uppercase tracking-wider font-medium">Mean Resolution Hours</span>
+            <div id="cf-mean-hours" class="text-2xl font-display font-bold text-blue-400 mt-1 tabular">4.8 hrs</div>
+            <span class="text-[11px] text-slate-400">Across Closed Service Requests</span>
           </div>
-          <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-            <span class="text-xs text-gray-400">Replay Idempotency</span>
-            <div class="text-2xl font-bold text-emerald-400 mt-1 font-mono">100.0%</div>
-            <span class="text-[10px] text-emerald-400">0 Duplicate Records</span>
+          <div>
+            <span class="text-xs text-slate-400 uppercase tracking-wider font-medium">Replay Idempotency</span>
+            <div class="text-2xl font-display font-bold text-emerald-400 mt-1 tabular">100.0%</div>
+            <span class="text-[11px] text-emerald-400">0 Duplicate Records Ingested</span>
           </div>
         </div>
 
         <!-- Charts Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div class="lg:col-span-6 p-4 rounded-xl bg-dark-900 border border-white/5">
-            <h4 class="text-xs font-bold text-gray-300 mb-3 flex items-center justify-between">
-              <span>Requests by NYC Borough</span>
-              <span class="text-[10px] text-gray-400">Silver Aggregates</span>
-            </h4>
-            <div class="h-60">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 pt-4">
+          <div class="lg:col-span-6 p-5 rounded-xl border border-surface-border space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-slate-200">Requests by NYC Borough</span>
+              <span class="text-slate-500 font-mono text-[11px]">Silver Aggregates</span>
+            </div>
+            <div class="h-56">
               <canvas id="cfBoroughChart"></canvas>
             </div>
           </div>
-          <div class="lg:col-span-6 p-4 rounded-xl bg-dark-900 border border-white/5">
-            <h4 class="text-xs font-bold text-gray-300 mb-3 flex items-center justify-between">
-              <span>Agency Resolution Time (Mean Hours)</span>
-              <span class="text-[10px] text-gray-400">Gold Service Metrics</span>
-            </h4>
-            <div class="h-60">
+          <div class="lg:col-span-6 p-5 rounded-xl border border-surface-border space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-slate-200">Agency Resolution Time (Mean Hours)</span>
+              <span class="text-slate-500 font-mono text-[11px]">Gold SLA Metrics</span>
+            </div>
+            <div class="h-56">
               <canvas id="cfAgencyChart"></canvas>
             </div>
           </div>
         </div>
 
-        <!-- Sample Warehouse Records Table -->
-        <div class="mt-6">
-          <h4 class="text-xs font-bold text-gray-300 mb-3 flex items-center justify-between">
-            <span>Recent Silver Warehouse Transactions (Idempotent Keyed Upsert)</span>
-            <span class="text-[10px] text-teal-400">Live SQLite Replica</span>
-          </h4>
-          <div class="overflow-x-auto rounded-xl border border-white/10">
+        <!-- Sample Records Table -->
+        <div class="space-y-3 pt-2">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-slate-200">Recent Silver Warehouse Transactions (Idempotent Keyed Upsert)</span>
+            <span class="text-emerald-400 font-mono text-[11px]">SQLite WAL Conformed Replica</span>
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-surface-border">
             <table class="w-full text-left text-xs font-mono">
-              <thead class="bg-dark-950 text-gray-400 border-b border-white/10">
+              <thead class="bg-surface-base text-slate-400 border-b border-surface-border">
                 <tr>
                   <th class="p-3">Unique Key</th>
                   <th class="p-3">Agency</th>
@@ -354,33 +360,33 @@
                   <th class="p-3">Hash Digest</th>
                 </tr>
               </thead>
-              <tbody id="cf-table-body" class="divide-y divide-white/5 bg-dark-900">
+              <tbody id="cf-table-body" class="divide-y divide-surface-border bg-surface-panel/40 text-slate-300">
                 <tr>
-                  <td class="p-3 text-teal-300">NYC-311-689021</td>
-                  <td class="p-3 text-gray-300">NYPD</td>
-                  <td class="p-3 text-gray-300">Noise - Residential</td>
-                  <td class="p-3 text-gray-300">BROOKLYN</td>
-                  <td class="p-3"><span class="badge-pill bg-emerald-500/20 text-emerald-300">Closed</span></td>
-                  <td class="p-3 text-gray-300">2.4 hrs</td>
-                  <td class="p-3 text-gray-500">8f4a1c...90e2</td>
+                  <td class="p-3 text-emerald-400 font-medium">NYC-311-689021</td>
+                  <td class="p-3">NYPD</td>
+                  <td class="p-3">Noise - Residential</td>
+                  <td class="p-3">BROOKLYN</td>
+                  <td class="p-3"><span class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Closed</span></td>
+                  <td class="p-3 tabular">2.4 hrs</td>
+                  <td class="p-3 text-slate-500">8f4a1c...90e2</td>
                 </tr>
                 <tr>
-                  <td class="p-3 text-teal-300">NYC-311-689022</td>
-                  <td class="p-3 text-gray-300">HPD</td>
-                  <td class="p-3 text-gray-300">Heat/Hot Water</td>
-                  <td class="p-3 text-gray-300">BRONX</td>
-                  <td class="p-3"><span class="badge-pill bg-blue-500/20 text-blue-300">In Progress</span></td>
-                  <td class="p-3 text-gray-400">—</td>
-                  <td class="p-3 text-gray-500">3d91b7...41a8</td>
+                  <td class="p-3 text-emerald-400 font-medium">NYC-311-689022</td>
+                  <td class="p-3">HPD</td>
+                  <td class="p-3">Heat/Hot Water</td>
+                  <td class="p-3">BRONX</td>
+                  <td class="p-3"><span class="badge bg-blue-500/10 text-blue-400 border border-blue-500/20">In Progress</span></td>
+                  <td class="p-3 text-slate-500">—</td>
+                  <td class="p-3 text-slate-500">3d91b7...41a8</td>
                 </tr>
                 <tr>
-                  <td class="p-3 text-teal-300">NYC-311-689023</td>
-                  <td class="p-3 text-gray-300">DOT</td>
-                  <td class="p-3 text-gray-300">Street Condition</td>
-                  <td class="p-3 text-gray-300">QUEENS</td>
-                  <td class="p-3"><span class="badge-pill bg-emerald-500/20 text-emerald-300">Closed</span></td>
-                  <td class="p-3 text-gray-300">12.1 hrs</td>
-                  <td class="p-3 text-gray-500">c01ef4...52b3</td>
+                  <td class="p-3 text-emerald-400 font-medium">NYC-311-689023</td>
+                  <td class="p-3">DOT</td>
+                  <td class="p-3">Street Condition</td>
+                  <td class="p-3">QUEENS</td>
+                  <td class="p-3"><span class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Closed</span></td>
+                  <td class="p-3 tabular">12.1 hrs</td>
+                  <td class="p-3 text-slate-500">c01ef4...52b3</td>
                 </tr>
               </tbody>
             </table>
@@ -391,36 +397,35 @@
 
     <!-- ==================== TAB 2: CONTRACTWATCH ==================== -->
     <div id="tab-contractwatch" class="tab-content hidden space-y-6">
-      <div class="p-6 rounded-2xl glass-panel">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
+      <div class="panel p-8 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-surface-border">
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <h3 class="text-xl font-bold text-white">ContractWatch: Data Contracts & Drift Detection</h3>
-              <span class="badge-pill bg-amber-500/10 text-amber-300 border border-amber-500/30">Schema Guardian</span>
+              <h3 class="text-xl font-display font-bold text-white">ContractWatch: Schema Drift & Contract Enforcement</h3>
+              <span class="badge bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono">Data Contract Gate</span>
             </div>
-            <p class="text-xs text-gray-400">Guarantees data contracts, validates data types and missingness thresholds, and flags breaking changes before corrupting downstream warehouse schemas.</p>
+            <p class="text-xs text-slate-400">Evaluates incoming batch profiles against versioned JSON data contracts. Intercepts type mutations and missingness anomalies with non-zero exit codes.</p>
           </div>
-          <div class="flex gap-2">
-            <button onclick="setContractScenario('pass')" class="px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 text-xs font-semibold">
-              <i class="fa-solid fa-check"></i> Standard Payload (Pass)
+          <div class="flex flex-wrap gap-2">
+            <button onclick="setContractScenario('pass')" class="px-3 py-1.5 rounded-lg bg-surface-subtle hover:bg-surface-border text-emerald-400 border border-emerald-500/30 text-xs font-semibold transition">
+              <i class="fa-solid fa-check mr-1"></i> Valid Batch (Pass)
             </button>
-            <button onclick="setContractScenario('type_drift')" class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 text-xs font-semibold">
-              <i class="fa-solid fa-triangle-exclamation"></i> Type Mutation Drift
+            <button onclick="setContractScenario('type_drift')" class="px-3 py-1.5 rounded-lg bg-surface-subtle hover:bg-surface-border text-amber-400 border border-amber-500/30 text-xs font-semibold transition">
+              <i class="fa-solid fa-triangle-exclamation mr-1"></i> Type Mutation Drift
             </button>
-            <button onclick="setContractScenario('null_drift')" class="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-semibold">
-              <i class="fa-solid fa-ban"></i> Null Spikes (Breaking)
+            <button onclick="setContractScenario('null_drift')" class="px-3 py-1.5 rounded-lg bg-surface-subtle hover:bg-surface-border text-rose-400 border border-rose-500/30 text-xs font-semibold transition">
+              <i class="fa-solid fa-ban mr-1"></i> Null Spikes (Breach)
             </button>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 my-6">
-          <!-- Contract JSON Definition -->
-          <div class="lg:col-span-5 flex flex-col">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-gray-300"><i class="fa-solid fa-file-shield text-teal-400 mr-1.5"></i> Contract Specification</span>
-              <span class="text-[10px] text-gray-500 font-mono">contracts/nyc311.json</span>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-5 space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-200">Contract Specification</span>
+              <span class="font-mono text-slate-500 text-[11px]">contracts/nyc311.json</span>
             </div>
-            <textarea id="cw-contract-json" class="flex-1 w-full h-72 p-3 bg-dark-950 rounded-xl border border-white/10 font-mono text-xs text-teal-300 focus:outline-none focus:border-teal-500" spellcheck="false">{
+            <textarea id="cw-contract-json" class="w-full h-72 p-4 bg-surface-base rounded-xl border border-surface-border font-mono text-xs text-emerald-400 focus:outline-none focus:border-emerald-500 leading-relaxed" spellcheck="false">{
   "version": "1.0.0",
   "name": "nyc311_service_requests",
   "fields": {
@@ -434,15 +439,14 @@
 }</textarea>
           </div>
 
-          <!-- Incoming Observed Payload -->
-          <div class="lg:col-span-7 flex flex-col">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-bold text-gray-300"><i class="fa-solid fa-inbox text-blue-400 mr-1.5"></i> Incoming Ingestion Batch (JSONL Sample)</span>
-              <button onclick="evaluateContractWatch()" class="px-3 py-1 rounded bg-teal-500 hover:bg-teal-400 text-black text-xs font-bold">
-                <i class="fa-solid fa-bolt mr-1"></i> Run Contract Audit
+          <div class="lg:col-span-7 space-y-2">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-200">Incoming Ingestion Batch (JSONL Sample)</span>
+              <button onclick="evaluateContractWatch()" class="px-3 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-black text-xs font-bold transition">
+                <i class="fa-solid fa-bolt mr-1"></i> Run Schema Audit
               </button>
             </div>
-            <textarea id="cw-payload-json" class="flex-1 w-full h-72 p-3 bg-dark-950 rounded-xl border border-white/10 font-mono text-xs text-blue-300 focus:outline-none focus:border-blue-500" spellcheck="false">[
+            <textarea id="cw-payload-json" class="w-full h-72 p-4 bg-surface-base rounded-xl border border-surface-border font-mono text-xs text-slate-300 focus:outline-none focus:border-emerald-500 leading-relaxed" spellcheck="false">[
   {"unique_key": "rec-101", "created_date": "2026-10-29T10:00:00Z", "agency": "NYPD", "complaint_type": "Noise", "borough": "MANHATTAN", "status": "Closed"},
   {"unique_key": "rec-102", "created_date": "2026-10-29T10:05:00Z", "agency": "DOT", "complaint_type": "Pothole", "borough": "QUEENS", "status": "Open"},
   {"unique_key": "rec-103", "created_date": "2026-10-29T10:12:00Z", "agency": "DEP", "complaint_type": "Water Leak", "borough": "BROOKLYN", "status": "Pending"}
@@ -450,33 +454,33 @@
           </div>
         </div>
 
-        <!-- Evaluation Results Output -->
-        <div id="cw-result-panel" class="p-5 rounded-xl bg-dark-950 border border-emerald-500/30">
-          <div class="flex items-center justify-between pb-3 border-b border-white/10">
-            <div class="flex items-center gap-2">
+        <!-- Evaluation Results Panel -->
+        <div id="cw-result-panel" class="p-6 rounded-xl border border-emerald-500/30 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-surface-border">
+            <div class="flex items-center gap-3">
               <i id="cw-result-icon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
               <div>
                 <span id="cw-result-title" class="font-bold text-white text-sm">Contract Validation PASSED: 100% Invariant Compliance</span>
-                <p id="cw-result-desc" class="text-xs text-gray-400">All 3 incoming records conform strictly to schema specification types and nullity thresholds.</p>
+                <p id="cw-result-desc" class="text-xs text-slate-400">All 3 incoming records conform strictly to schema specification types and nullity thresholds.</p>
               </div>
             </div>
-            <span id="cw-result-badge" class="badge-pill bg-emerald-500/20 text-emerald-300">Exit Code: 0</span>
+            <span id="cw-result-badge" class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">Exit Code: 0</span>
           </div>
 
-          <div class="mt-4">
-            <div class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Detected Drift & Audit Details:</div>
-            <div id="cw-drift-list" class="space-y-1.5 font-mono text-xs text-gray-300">
-              <div class="p-2 rounded bg-dark-900 border border-white/5 flex items-center justify-between">
-                <span><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Field <code>unique_key</code>: Type <code>str</code> verified • 0.00% null fraction</span>
-                <span class="text-emerald-400">OK</span>
+          <div class="space-y-1">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-2">Field-Level Verification Audit</span>
+            <div id="cw-drift-list" class="divide-y divide-surface-border font-mono text-xs text-slate-300">
+              <div class="py-2.5 flex items-center justify-between">
+                <span>Field <code>unique_key</code>: Type <code>str</code> verified • 0.00% null fraction</span>
+                <span class="text-emerald-400 font-bold">PASS</span>
               </div>
-              <div class="p-2 rounded bg-dark-900 border border-white/5 flex items-center justify-between">
-                <span><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Field <code>agency</code>: Type <code>str</code> verified • 0.00% null fraction</span>
-                <span class="text-emerald-400">OK</span>
+              <div class="py-2.5 flex items-center justify-between">
+                <span>Field <code>agency</code>: Type <code>str</code> verified • 0.00% null fraction</span>
+                <span class="text-emerald-400 font-bold">PASS</span>
               </div>
-              <div class="p-2 rounded bg-dark-900 border border-white/5 flex items-center justify-between">
-                <span><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Field <code>borough</code>: Type <code>str</code> verified • 0.00% null fraction (threshold: 5.0%)</span>
-                <span class="text-emerald-400">OK</span>
+              <div class="py-2.5 flex items-center justify-between">
+                <span>Field <code>borough</code>: Type <code>str</code> verified • 0.00% null fraction (threshold: 5.0%)</span>
+                <span class="text-emerald-400 font-bold">PASS</span>
               </div>
             </div>
           </div>
@@ -486,76 +490,46 @@
 
     <!-- ==================== TAB 3: AWSFLOW ==================== -->
     <div id="tab-awsflow" class="tab-content hidden space-y-6">
-      <div class="p-6 rounded-2xl glass-panel">
-        <div class="pb-6 border-b border-white/10">
+      <div class="panel p-8 space-y-6">
+        <div class="pb-6 border-b border-surface-border">
           <div class="flex items-center gap-2 mb-1">
-            <h3 class="text-xl font-bold text-white">AWSFlow: Cloud Event Ingestion & Athena Partition Projection</h3>
-            <span class="badge-pill bg-blue-500/10 text-blue-300 border border-blue-500/30">AWS S3 • Lambda • Athena</span>
+            <h3 class="text-xl font-display font-bold text-white">AWSFlow: Cloud Event Ingestion & Athena Partition Projection</h3>
+            <span class="badge bg-blue-500/10 text-blue-400 border border-blue-500/20 font-mono">AWS S3 • Athena</span>
           </div>
-          <p class="text-xs text-gray-400">Automated event-driven pipeline utilizing S3 notifications, SQS dead-letter queues, idempotent Lambda workers, commit-last manifests, and Athena partition projection without glue crawler latency.</p>
+          <p class="text-xs text-slate-400">Event-driven cloud pipeline utilizing S3 notifications, SQS dead-letter queues, idempotent Lambda batch workers, commit-last manifests, and Athena partition projection without Glue crawler latency.</p>
         </div>
 
-        <!-- Interactive Cloud Architecture Diagram -->
-        <div class="my-6 p-6 rounded-2xl bg-dark-950 border border-white/10 relative overflow-hidden">
-          <div class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 flex items-center justify-between">
-            <span>Cloud Architecture Topology (Click a service for CloudFormation specs)</span>
-            <span class="text-teal-400 font-mono text-[11px]"><i class="fa-solid fa-circle-nodes mr-1"></i> EventBridge / SQS Fan-Out</span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-center">
-            <!-- Node 1 -->
-            <button onclick="showAwsSpec('s3_bronze')" class="p-4 rounded-xl bg-dark-900 hover:bg-dark-800 border border-teal-500/30 text-left transition group">
-              <div class="w-8 h-8 rounded-lg bg-teal-500/20 text-teal-300 flex items-center justify-center mb-2 group-hover:scale-110 transition">
-                <i class="fa-solid fa-bucket"></i>
-              </div>
-              <div class="text-xs font-bold text-white">S3 Landing</div>
-              <div class="text-[11px] text-gray-400 mt-1">Gzip JSONL batches; S3 ObjectCreated events</div>
+        <div class="space-y-4">
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Cloud Lakehouse Architecture Nodes (Click a node to view CloudFormation template)</span>
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+            <button onclick="showAwsSpec('s3_bronze')" class="p-4 rounded-xl bg-surface-base hover:bg-surface-subtle border border-surface-border text-left transition">
+              <span class="text-xs font-bold text-white block mb-1">1. S3 Landing</span>
+              <span class="text-[11px] text-slate-400 leading-tight block">Gzip JSONL batches; S3 ObjectCreated events</span>
             </button>
-
-            <!-- Node 2 -->
-            <button onclick="showAwsSpec('eventbridge')" class="p-4 rounded-xl bg-dark-900 hover:bg-dark-800 border border-purple-500/30 text-left transition group">
-              <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-300 flex items-center justify-center mb-2 group-hover:scale-110 transition">
-                <i class="fa-solid fa-arrows-split-up-and-left"></i>
-              </div>
-              <div class="text-xs font-bold text-white">EventBridge / SQS</div>
-              <div class="text-[11px] text-gray-400 mt-1">Dead-letter queue with 3 max retries; backpressure buffer</div>
+            <button onclick="showAwsSpec('eventbridge')" class="p-4 rounded-xl bg-surface-base hover:bg-surface-subtle border border-surface-border text-left transition">
+              <span class="text-xs font-bold text-white block mb-1">2. SQS with DLQ</span>
+              <span class="text-[11px] text-slate-400 leading-tight block">3 max retries; backpressure quarantine buffer</span>
             </button>
-
-            <!-- Node 3 -->
-            <button onclick="showAwsSpec('lambda')" class="p-4 rounded-xl bg-dark-900 hover:bg-dark-800 border border-amber-500/30 text-left transition group">
-              <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center mb-2 group-hover:scale-110 transition">
-                <i class="fa-solid fa-bolt"></i>
-              </div>
-              <div class="text-xs font-bold text-white">Lambda Worker</div>
-              <div class="text-[11px] text-gray-400 mt-1">Scoped IAM execution; validation; writes partition Parquet</div>
+            <button onclick="showAwsSpec('lambda')" class="p-4 rounded-xl bg-surface-base hover:bg-surface-subtle border border-surface-border text-left transition">
+              <span class="text-xs font-bold text-white block mb-1">3. Lambda Worker</span>
+              <span class="text-[11px] text-slate-400 leading-tight block">Scoped IAM execution; validation; Parquet output</span>
             </button>
-
-            <!-- Node 4 -->
-            <button onclick="showAwsSpec('manifest')" class="p-4 rounded-xl bg-dark-900 hover:bg-dark-800 border border-blue-500/30 text-left transition group">
-              <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-300 flex items-center justify-center mb-2 group-hover:scale-110 transition">
-                <i class="fa-solid fa-file-shield"></i>
-              </div>
-              <div class="text-xs font-bold text-white">Commit Manifest</div>
-              <div class="text-[11px] text-gray-400 mt-1">Commit-last semantic; guarantees atomic batch visibility</div>
+            <button onclick="showAwsSpec('manifest')" class="p-4 rounded-xl bg-surface-base hover:bg-surface-subtle border border-surface-border text-left transition">
+              <span class="text-xs font-bold text-white block mb-1">4. Commit Manifest</span>
+              <span class="text-[11px] text-slate-400 leading-tight block">Commit-last semantic; atomic batch visibility</span>
             </button>
-
-            <!-- Node 5 -->
-            <button onclick="showAwsSpec('athena')" class="p-4 rounded-xl bg-dark-900 hover:bg-dark-800 border border-emerald-500/30 text-left transition group">
-              <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center mb-2 group-hover:scale-110 transition">
-                <i class="fa-solid fa-database"></i>
-              </div>
-              <div class="text-xs font-bold text-white">Athena Projection</div>
-              <div class="text-[11px] text-gray-400 mt-1">Glue catalog partition projection; sub-second query metadata</div>
+            <button onclick="showAwsSpec('athena')" class="p-4 rounded-xl bg-surface-base hover:bg-surface-subtle border border-surface-border text-left transition">
+              <span class="text-xs font-bold text-white block mb-1">5. Athena Projection</span>
+              <span class="text-[11px] text-slate-400 leading-tight block">Date/hour partition projection; 0 crawler latency</span>
             </button>
           </div>
 
-          <!-- Spec Details Display -->
-          <div id="aws-spec-box" class="mt-6 p-4 rounded-xl bg-dark-900 border border-white/10 font-mono text-xs">
-            <div class="flex items-center justify-between text-teal-300 pb-2 border-b border-white/10 mb-3">
-              <span id="aws-spec-title" class="font-bold">Athena Partition Projection Configuration</span>
-              <span class="text-[10px] text-gray-500">infra/awsflow/template.json</span>
+          <div class="p-5 rounded-xl bg-surface-base border border-surface-border space-y-3 font-mono text-xs">
+            <div class="flex justify-between items-center text-slate-400 pb-2 border-b border-surface-border">
+              <span id="aws-spec-title" class="font-bold text-slate-200">Athena Partition Projection Configuration</span>
+              <span class="text-[11px] text-slate-500">infra/awsflow/template.json</span>
             </div>
-            <pre id="aws-spec-code" class="text-gray-300 overflow-x-auto text-[11px] leading-relaxed">"TableInput": {
+            <pre id="aws-spec-code" class="text-slate-300 overflow-x-auto text-[11px] leading-relaxed">"TableInput": {
   "Name": "silver_requests",
   "Parameters": {
     "projection.enabled": "true",
@@ -572,73 +546,72 @@
 
     <!-- ==================== TAB 4: LEDGERSTREAM ==================== -->
     <div id="tab-ledgerstream" class="tab-content hidden space-y-6">
-      <div class="p-6 rounded-2xl glass-panel">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
+      <div class="panel p-8 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-surface-border">
           <div>
             <div class="flex items-center gap-2 mb-1">
-              <h3 class="text-xl font-bold text-white">LedgerStream: Transactional Outbox & CDC Replay</h3>
-              <span class="badge-pill bg-purple-500/10 text-purple-300 border border-purple-500/30">Event Sourcing • Outbox CDC</span>
+              <h3 class="text-xl font-display font-bold text-white">LedgerStream: Transactional Outbox & CDC Replay</h3>
+              <span class="badge bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 font-mono">Outbox Pattern</span>
             </div>
-            <p class="text-xs text-gray-400">Guarantees zero dual-write divergence between primary databases and downstream event streams via ACID outbox tables, monotonic sequence checkpoints, and delete tombstones.</p>
+            <p class="text-xs text-slate-400">Guarantees zero dual-write divergence between domain state and downstream event projections via atomic outbox transactions, monotonic checkpoints, and delete tombstones.</p>
           </div>
-          <div class="flex gap-2">
-            <button onclick="runLedgerAction('order')" class="px-3.5 py-2 rounded-lg bg-teal-500 hover:bg-teal-400 text-black text-xs font-bold transition">
+          <div class="flex flex-wrap gap-2">
+            <button onclick="runLedgerAction('order')" class="px-3.5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-black text-xs font-bold transition">
               <i class="fa-solid fa-plus mr-1"></i> Place New Order
             </button>
-            <button onclick="runLedgerAction('crash')" class="px-3.5 py-2 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 text-xs font-bold transition">
+            <button onclick="runLedgerAction('crash')" class="px-3.5 py-2 rounded-lg bg-surface-subtle hover:bg-surface-border text-rose-400 border border-rose-500/30 text-xs font-semibold transition">
               <i class="fa-solid fa-skull mr-1"></i> Inject Crash Mid-Transaction
             </button>
-            <button onclick="runLedgerAction('replay')" class="px-3.5 py-2 rounded-lg bg-dark-800 hover:bg-dark-700 text-gray-200 border border-white/10 text-xs font-bold transition">
+            <button onclick="runLedgerAction('replay')" class="px-3.5 py-2 rounded-lg bg-surface-subtle hover:bg-surface-border text-slate-200 border border-surface-border text-xs font-semibold transition">
               <i class="fa-solid fa-clock-rotate-left mr-1"></i> Replay Checkpoints
             </button>
           </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
-          <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-            <span class="text-xs text-gray-400">Outbox Monotonic Checkpoint</span>
-            <div id="ls-checkpoint" class="text-2xl font-bold text-teal-400 mt-1 font-mono">Seq #4</div>
-            <span class="text-[10px] text-gray-400">Strictly ordered, durable checkpoint</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+          <div class="border-b md:border-b-0 md:border-r border-surface-border pb-3 md:pb-0 pr-4">
+            <span class="text-xs text-slate-400 uppercase tracking-wider font-medium">Outbox Monotonic Checkpoint</span>
+            <div id="ls-checkpoint" class="text-2xl font-display font-bold text-emerald-400 mt-1 tabular">Seq #4</div>
+            <span class="text-[11px] text-slate-400">Strictly ordered, durable checkpoint</span>
           </div>
-          <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-            <span class="text-xs text-gray-400">Aggregate Revenue</span>
-            <div id="ls-revenue" class="text-2xl font-bold text-emerald-400 mt-1 font-mono">$50.00</div>
-            <span class="text-[10px] text-gray-400">Zero double-counting under replay</span>
+          <div class="border-b md:border-b-0 md:border-r border-surface-border pb-3 md:pb-0 pr-4">
+            <span class="text-xs text-slate-400 uppercase tracking-wider font-medium">Aggregate Revenue</span>
+            <div id="ls-revenue" class="text-2xl font-display font-bold text-white mt-1 tabular">$50.00</div>
+            <span class="text-[11px] text-emerald-400">0 double-counting under replay</span>
           </div>
-          <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-            <span class="text-xs text-gray-400">Retained Delete Tombstones</span>
-            <div id="ls-tombstones" class="text-2xl font-bold text-purple-400 mt-1 font-mono">1</div>
-            <span class="text-[10px] text-gray-400">Preserves sequence history</span>
+          <div>
+            <span class="text-xs text-slate-400 uppercase tracking-wider font-medium">Retained Delete Tombstones</span>
+            <div id="ls-tombstones" class="text-2xl font-display font-bold text-slate-300 mt-1 tabular">1</div>
+            <span class="text-[11px] text-slate-400">Preserves sequence history</span>
           </div>
         </div>
 
-        <!-- Ledger Events Stream Visualizer -->
-        <div class="p-4 rounded-xl bg-dark-950 border border-white/10 font-mono text-xs">
-          <div class="flex items-center justify-between pb-2 border-b border-white/10 text-gray-400 mb-3">
-            <span>Transactional Outbox Stream & Downstream Receipt Log</span>
-            <span class="text-teal-400 text-[11px]"><i class="fa-solid fa-lock mr-1"></i> SQLite WAL Mode</span>
+        <div class="space-y-3 pt-2">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-bold text-slate-200">Transactional Outbox Stream & Receipt Receipts Log</span>
+            <span class="text-emerald-400 font-mono text-[11px]">SQLite WAL Mode Guaranteed</span>
           </div>
-          <div id="ls-event-list" class="space-y-2 text-xs">
-            <div class="p-2.5 rounded bg-dark-900 border border-emerald-500/30 flex items-center justify-between">
+          <div id="ls-event-list" class="space-y-2 font-mono text-xs">
+            <div class="p-3 rounded-lg bg-surface-base border border-surface-border flex items-center justify-between text-slate-300">
               <div>
                 <span class="text-emerald-400 font-bold">[COMMITTED]</span>
-                <span class="text-white ml-2">Seq #1 • Order #o-1 • status: "placed" • amount: $50.00</span>
+                <span class="ml-2">Seq #1 • Order #o-1 • status: "placed" • amount: $50.00</span>
               </div>
-              <span class="text-gray-500 text-[11px]">TxId: tx-9201</span>
+              <span class="text-slate-500 text-[11px]">TxId: tx-9201</span>
             </div>
-            <div class="p-2.5 rounded bg-dark-900 border border-emerald-500/30 flex items-center justify-between">
+            <div class="p-3 rounded-lg bg-surface-base border border-surface-border flex items-center justify-between text-slate-300">
               <div>
                 <span class="text-emerald-400 font-bold">[COMMITTED]</span>
-                <span class="text-white ml-2">Seq #2 • Order #o-1 • status: "paid" • amount: $50.00</span>
+                <span class="ml-2">Seq #2 • Order #o-1 • status: "paid" • amount: $50.00</span>
               </div>
-              <span class="text-gray-500 text-[11px]">TxId: tx-9202</span>
+              <span class="text-slate-500 text-[11px]">TxId: tx-9202</span>
             </div>
-            <div class="p-2.5 rounded bg-dark-900 border border-purple-500/30 flex items-center justify-between">
+            <div class="p-3 rounded-lg bg-surface-base border border-surface-border flex items-center justify-between text-slate-300">
               <div>
-                <span class="text-purple-400 font-bold">[TOMBSTONE]</span>
-                <span class="text-white ml-2">Seq #3 • Order #o-2 • status: "deleted" • tombstone preserved</span>
+                <span class="text-indigo-400 font-bold">[TOMBSTONE]</span>
+                <span class="ml-2">Seq #3 • Order #o-2 • status: "deleted" • tombstone preserved</span>
               </div>
-              <span class="text-gray-500 text-[11px]">TxId: tx-9203</span>
+              <span class="text-slate-500 text-[11px]">TxId: tx-9203</span>
             </div>
           </div>
         </div>
@@ -647,130 +620,100 @@
 
     <!-- ==================== TAB 5: DEMANDSERVE ==================== -->
     <div id="tab-demandserve" class="tab-content hidden space-y-6">
-      <div class="p-6 rounded-2xl glass-panel">
-        <div class="pb-6 border-b border-white/10">
+      <div class="panel p-8 space-y-6">
+        <div class="pb-6 border-b border-surface-border">
           <div class="flex items-center gap-2 mb-1">
-            <h3 class="text-xl font-bold text-white">DemandServe: ML Model Serving & Chronological Evaluation</h3>
-            <span class="badge-pill bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">ML Engineering</span>
+            <h3 class="text-xl font-display font-bold text-white">DemandServe: ML Model Serving & Chronological Evaluation</h3>
+            <span class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono">ML Serving</span>
           </div>
-          <p class="text-xs text-gray-400">Strictly leak-free time-series ML inference pipeline. Uses chronological train/test splits, versioned ridge regression artifacts, and input bounds checking with sub-10ms response latencies.</p>
+          <p class="text-xs text-slate-400">Strictly leak-free time-series ML inference pipeline. Evaluated with chronological train/test splits, versioned Ridge regression artifacts, input bounds verification, and sub-10ms response latencies.</p>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 my-6">
-          <!-- Live Interactive Predictor Form -->
-          <div class="lg:col-span-5 p-5 rounded-2xl bg-dark-950 border border-white/10 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-bold text-gray-300 uppercase tracking-wider">Live Model Inference Controls</span>
-                <span class="badge-pill bg-teal-500/20 text-teal-300 font-mono text-[10px]">Model: ridge-v1.0</span>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <div class="lg:col-span-5 p-6 rounded-xl border border-surface-border space-y-5">
+            <div class="flex justify-between items-center pb-3 border-b border-surface-border">
+              <span class="text-xs font-bold text-slate-200 uppercase tracking-wider">Live Model Inference Controls</span>
+              <span class="badge bg-surface-subtle text-slate-300 font-mono text-[10px]">Model: ridge-v1.0</span>
+            </div>
+
+            <div class="space-y-4 text-xs">
+              <div>
+                <div class="flex justify-between text-slate-300 mb-1">
+                  <span>Normalized Temperature:</span>
+                  <span id="ds-temp-val" class="font-mono text-emerald-400 font-bold tabular">0.65</span>
+                </div>
+                <input type="range" id="ds-temp" min="0" max="1" step="0.05" value="0.65" oninput="updateDemandServe()" class="w-full accent-emerald-500">
               </div>
 
-              <div class="space-y-4 text-xs">
-                <div>
-                  <div class="flex justify-between text-gray-300 mb-1">
-                    <span>Normalized Temperature:</span>
-                    <span id="ds-temp-val" class="font-mono text-teal-400 font-bold">0.65</span>
-                  </div>
-                  <input type="range" id="ds-temp" min="0" max="1" step="0.05" value="0.65" oninput="updateDemandServe()" class="w-full accent-teal-400">
+              <div>
+                <div class="flex justify-between text-slate-300 mb-1">
+                  <span>Humidity:</span>
+                  <span id="ds-hum-val" class="font-mono text-emerald-400 font-bold tabular">0.45</span>
                 </div>
+                <input type="range" id="ds-hum" min="0" max="1" step="0.05" value="0.45" oninput="updateDemandServe()" class="w-full accent-emerald-500">
+              </div>
 
-                <div>
-                  <div class="flex justify-between text-gray-300 mb-1">
-                    <span>Humidity:</span>
-                    <span id="ds-hum-val" class="font-mono text-teal-400 font-bold">0.45</span>
-                  </div>
-                  <input type="range" id="ds-hum" min="0" max="1" step="0.05" value="0.45" oninput="updateDemandServe()" class="w-full accent-teal-400">
+              <div>
+                <div class="flex justify-between text-slate-300 mb-1">
+                  <span>Windspeed:</span>
+                  <span id="ds-wind-val" class="font-mono text-emerald-400 font-bold tabular">0.20</span>
                 </div>
+                <input type="range" id="ds-wind" min="0" max="1" step="0.05" value="0.20" oninput="updateDemandServe()" class="w-full accent-emerald-500">
+              </div>
 
+              <div class="grid grid-cols-2 gap-3 pt-1">
                 <div>
-                  <div class="flex justify-between text-gray-300 mb-1">
-                    <span>Windspeed:</span>
-                    <span id="ds-wind-val" class="font-mono text-teal-400 font-bold">0.20</span>
-                  </div>
-                  <input type="range" id="ds-wind" min="0" max="1" step="0.05" value="0.20" oninput="updateDemandServe()" class="w-full accent-teal-400">
+                  <label class="block text-slate-400 mb-1">Season</label>
+                  <select id="ds-season" onchange="updateDemandServe()" class="w-full p-2.5 rounded-lg bg-surface-panel border border-surface-border text-slate-200 font-mono text-xs">
+                    <option value="1">Spring</option>
+                    <option value="2">Summer</option>
+                    <option value="3" selected>Fall</option>
+                    <option value="4">Winter</option>
+                  </select>
                 </div>
-
-                <div class="grid grid-cols-2 gap-3 pt-2">
-                  <div>
-                    <label class="block text-gray-400 mb-1">Season</label>
-                    <select id="ds-season" onchange="updateDemandServe()" class="w-full p-2 rounded-lg bg-dark-900 border border-white/10 text-white font-mono text-xs">
-                      <option value="1">Spring</option>
-                      <option value="2">Summer</option>
-                      <option value="3" selected>Fall</option>
-                      <option value="4">Winter</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label class="block text-gray-400 mb-1">Day Type</label>
-                    <select id="ds-workingday" onchange="updateDemandServe()" class="w-full p-2 rounded-lg bg-dark-900 border border-white/10 text-white font-mono text-xs">
-                      <option value="1" selected>Working Day</option>
-                      <option value="0">Weekend / Holiday</option>
-                    </select>
-                  </div>
+                <div>
+                  <label class="block text-slate-400 mb-1">Day Type</label>
+                  <select id="ds-workingday" onchange="updateDemandServe()" class="w-full p-2.5 rounded-lg bg-surface-panel border border-surface-border text-slate-200 font-mono text-xs">
+                    <option value="1" selected>Working Day</option>
+                    <option value="0">Weekend / Holiday</option>
+                  </select>
                 </div>
               </div>
             </div>
 
-            <button onclick="updateDemandServe()" class="w-full mt-6 py-2.5 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-black text-xs font-bold shadow-lg transition">
-              <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Run Real-Time Prediction
+            <button onclick="updateDemandServe()" class="w-full py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-black text-xs font-bold transition">
+              <i class="fa-solid fa-play mr-1.5"></i> Compute Real-Time Prediction
             </button>
           </div>
 
-          <!-- Prediction Output Card & Diagnostics -->
-          <div class="lg:col-span-7 flex flex-col justify-between space-y-4">
-            <div class="p-6 rounded-2xl bg-dark-950 border border-teal-500/30 flex items-center justify-between">
+          <div class="lg:col-span-7 space-y-6">
+            <div class="p-6 rounded-xl border border-surface-border flex items-center justify-between">
               <div>
-                <span class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Predicted Daily Demand</span>
-                <div id="ds-prediction" class="text-4xl font-extrabold text-teal-400 font-mono mt-1">7,067 riders</div>
-                <div class="text-xs text-gray-400 mt-1">95% Prediction Interval: <span id="ds-interval" class="font-mono text-gray-200">6,120 – 8,014</span></div>
+                <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Predicted Daily Demand</span>
+                <div id="ds-prediction" class="text-4xl font-display font-extrabold text-emerald-400 mt-1 tabular">7,067 riders</div>
+                <div class="text-xs text-slate-400 mt-1">95% Prediction Interval: <span id="ds-interval" class="font-mono text-slate-200 tabular">6,120 – 8,014</span></div>
               </div>
               <div class="text-right">
-                <span class="badge-pill bg-emerald-500/20 text-emerald-300 font-mono text-xs mb-1">P99: 4.8 ms</span>
-                <div class="text-[11px] text-gray-400">HTTP REST Latency</div>
+                <span class="badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono text-xs mb-1">P99: 4.8 ms</span>
+                <div class="text-[11px] text-slate-400">HTTP REST Latency</div>
               </div>
             </div>
 
-            <!-- Model Evaluation Metrics Breakdown -->
-            <div class="grid grid-cols-3 gap-3 text-center">
-              <div class="p-3 rounded-xl bg-dark-900 border border-white/5">
-                <div class="text-xs text-gray-400">Test R² Score</div>
-                <div class="text-lg font-bold text-white font-mono mt-0.5">0.684</div>
-                <div class="text-[10px] text-teal-400">+18% vs Baseline</div>
+            <div class="grid grid-cols-3 gap-4 text-center">
+              <div class="p-4 rounded-xl border border-surface-border">
+                <span class="text-xs text-slate-400 block">Test R² Score</span>
+                <span class="text-xl font-display font-bold text-white mt-0.5 block tabular">0.684</span>
+                <span class="text-[10px] text-emerald-400">+18% vs Baseline</span>
               </div>
-              <div class="p-3 rounded-xl bg-dark-900 border border-white/5">
-                <div class="text-xs text-gray-400">Mean Absolute Error</div>
-                <div class="text-lg font-bold text-white font-mono mt-0.5">642.1</div>
-                <div class="text-[10px] text-gray-400">Riders / Day</div>
+              <div class="p-4 rounded-xl border border-surface-border">
+                <span class="text-xs text-slate-400 block">Mean Absolute Error</span>
+                <span class="text-xl font-display font-bold text-white mt-0.5 block tabular">642.1</span>
+                <span class="text-[10px] text-slate-400">Riders / Day</span>
               </div>
-              <div class="p-3 rounded-xl bg-dark-900 border border-white/5">
-                <div class="text-xs text-gray-400">Leakage Guard</div>
-                <div class="text-lg font-bold text-emerald-400 font-mono mt-0.5">0.00%</div>
-                <div class="text-[10px] text-emerald-400">Strictly Prior Split</div>
-              </div>
-            </div>
-
-            <!-- Feature Sensitivity Preview -->
-            <div class="p-4 rounded-xl bg-dark-900 border border-white/5">
-              <div class="text-xs font-bold text-gray-300 mb-2 flex justify-between">
-                <span>Standardized Feature Weights</span>
-                <span class="text-[10px] text-gray-500">L2 Regularized Ridge</span>
-              </div>
-              <div class="space-y-1.5 text-[11px] font-mono">
-                <div class="flex justify-between items-center text-gray-300">
-                  <span>Temperature:</span>
-                  <div class="w-48 bg-dark-800 rounded-full h-2 overflow-hidden"><div class="bg-teal-400 h-full" style="width: 78%"></div></div>
-                  <span class="text-teal-300">+0.482</span>
-                </div>
-                <div class="flex justify-between items-center text-gray-300">
-                  <span>Humidity:</span>
-                  <div class="w-48 bg-dark-800 rounded-full h-2 overflow-hidden"><div class="bg-rose-400 h-full" style="width: 42%"></div></div>
-                  <span class="text-rose-300">-0.245</span>
-                </div>
-                <div class="flex justify-between items-center text-gray-300">
-                  <span>Windspeed:</span>
-                  <div class="w-48 bg-dark-800 rounded-full h-2 overflow-hidden"><div class="bg-rose-400 h-full" style="width: 28%"></div></div>
-                  <span class="text-rose-300">-0.164</span>
-                </div>
+              <div class="p-4 rounded-xl border border-surface-border">
+                <span class="text-xs text-slate-400 block">Temporal Leakage</span>
+                <span class="text-xl font-display font-bold text-emerald-400 mt-0.5 block tabular">0.00%</span>
+                <span class="text-[10px] text-emerald-400">Chronological Split</span>
               </div>
             </div>
           </div>
@@ -781,11 +724,11 @@
   </main>
 
   <!-- Footer -->
-  <footer class="mt-auto border-t border-white/10 glass-panel py-6 px-6 text-xs text-gray-400">
+  <footer class="mt-auto border-t border-surface-border bg-surface-base py-6 px-6 text-xs text-slate-400">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
       <div>
-        <p class="font-bold text-gray-200">Kartikeya Rana • Data Engineering & Distributed Systems</p>
-        <p class="text-gray-500 mt-0.5">State College, PA • Penn State University B.S. in Applied Data Science (Dec 2026)</p>
+        <p class="font-bold text-slate-200 font-display">Kartikeya Rana • Data Engineering & Distributed Systems</p>
+        <p class="text-slate-500 mt-0.5">Penn State University — B.S. in Applied Data Science (Dec 2026)</p>
       </div>
       <div class="flex items-center gap-4">
         <a href="https://github.com/Kartikeya-Rana-2004" target="_blank" class="hover:text-white transition">GitHub</a>
@@ -796,19 +739,18 @@
     </div>
   </footer>
 
-  <!-- Interactive JavaScript Engine -->
+  <!-- Scripts -->
   <script>
-    // Tab switching
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
       document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.classList.remove('active', 'text-teal-300');
-        btn.classList.add('text-gray-400');
+        btn.classList.remove('active');
+        btn.classList.add('text-slate-400');
       });
       document.getElementById('tab-' + tabId).classList.remove('hidden');
       const activeBtn = document.getElementById('tab-btn-' + tabId);
-      activeBtn.classList.add('active', 'text-teal-300');
-      activeBtn.classList.remove('text-gray-400');
+      activeBtn.classList.add('active');
+      activeBtn.classList.remove('text-slate-400');
 
       if (tabId === 'civicflow' && !window.cfChartsInitialized) {
         initCivicFlowCharts();
@@ -816,7 +758,6 @@
       }
     }
 
-    // CivicFlow Interactive Charts
     let boroughChart = null;
     let agencyChart = null;
 
@@ -827,12 +768,9 @@
         data: {
           labels: ['BROOKLYN', 'QUEENS', 'MANHATTAN', 'BRONX', 'STATEN ISLAND'],
           datasets: [{
-            label: 'Requests Count',
             data: [612, 485, 394, 281, 70],
-            backgroundColor: 'rgba(45, 212, 191, 0.7)',
-            borderColor: '#2dd4bf',
-            borderWidth: 1,
-            borderRadius: 6
+            backgroundColor: '#10b981',
+            borderRadius: 4
           }]
         },
         options: {
@@ -840,8 +778,8 @@
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { family: 'JetBrains Mono', size: 10 } } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { family: 'JetBrains Mono', size: 10 } } }
+            x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#94a3b8', font: { family: 'IBM Plex Mono', size: 10 } } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#94a3b8', font: { family: 'IBM Plex Mono', size: 10 } } }
           }
         }
       });
@@ -852,12 +790,9 @@
         data: {
           labels: ['NYPD', 'DOT', 'DEP', 'DSNY', 'HPD'],
           datasets: [{
-            label: 'Mean Resolution Hours',
             data: [2.8, 14.2, 8.5, 6.1, 19.4],
-            backgroundColor: 'rgba(59, 130, 246, 0.7)',
-            borderColor: '#3b82f6',
-            borderWidth: 1,
-            borderRadius: 6
+            backgroundColor: '#2563eb',
+            borderRadius: 4
           }]
         },
         options: {
@@ -866,14 +801,13 @@
           maintainAspectRatio: false,
           plugins: { legend: { display: false } },
           scales: {
-            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { family: 'JetBrains Mono', size: 10 } } },
-            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af', font: { family: 'JetBrains Mono', size: 10 } } }
+            x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#94a3b8', font: { family: 'IBM Plex Mono', size: 10 } } },
+            y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#94a3b8', font: { family: 'IBM Plex Mono', size: 10 } } }
           }
         }
       });
     }
 
-    // CivicFlow Demo Trigger
     function runCivicFlowDemo(type) {
       const logMsg = document.getElementById('cf-log-message');
       const logBadge = document.getElementById('cf-log-badge');
@@ -881,8 +815,8 @@
       const quarRec = document.getElementById('cf-quarantined');
 
       if (type === 'clean') {
-        logMsg.innerHTML = '<strong>Batch Ingestion Completed:</strong> 420 source rows parsed • 420 accepted into Silver • 0 quarantined • SHA-256 Checksum verified.';
-        logBadge.className = 'badge-pill bg-emerald-500/20 text-emerald-300';
+        logMsg.innerHTML = '<strong>Batch Ingestion Completed:</strong> 420 source rows parsed • 420 accepted into Silver • 0 quarantined • SHA-256 verified.';
+        logBadge.className = 'badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20';
         logBadge.innerText = 'Status: Clean Insert';
         totalRec.innerText = '2,262';
         quarRec.innerText = '0';
@@ -891,18 +825,17 @@
           boroughChart.update();
         }
       } else if (type === 'quarantine') {
-        logMsg.innerHTML = '<strong>Quality Gate Quarantine Triggered:</strong> 2 records with missing required fields isolated in Dead-Letter quarantine table. Warehouse integrity preserved.';
-        logBadge.className = 'badge-pill bg-amber-500/20 text-amber-300';
+        logMsg.innerHTML = '<strong>Quality Gate Quarantine Triggered:</strong> 2 records with missing required fields isolated in Dead-Letter quarantine table.';
+        logBadge.className = 'badge bg-amber-500/10 text-amber-400 border border-amber-500/20';
         logBadge.innerText = 'Quarantine: 2 Blocked';
         quarRec.innerText = '2';
       } else if (type === 'replay') {
-        logMsg.innerHTML = '<strong>Replay Determinism Check:</strong> Replayed entire batch of 2,262 records. Exactly <strong>0 inserts, 0 updates, 2,262 unchanged</strong> (100% Idempotent).';
-        logBadge.className = 'badge-pill bg-blue-500/20 text-blue-300';
+        logMsg.innerHTML = '<strong>Replay Determinism Check:</strong> Replayed batch of 2,262 records. Exactly <strong>0 inserts, 0 updates, 2,262 unchanged</strong> (100% Idempotent).';
+        logBadge.className = 'badge bg-blue-500/10 text-blue-400 border border-blue-500/20';
         logBadge.innerText = 'Idempotency: 100% No-op';
       }
     }
 
-    // ContractWatch Scenarios
     function setContractScenario(mode) {
       const payloadEl = document.getElementById('cw-payload-json');
       if (mode === 'pass') {
@@ -938,7 +871,7 @@
       let hasNullDrift = false;
 
       payload.forEach(row => {
-        if (typeof row.unique_key !== 'string' || typeof row.agency !== 'string' && row.agency !== null) {
+        if (typeof row.unique_key !== 'string' || (typeof row.agency !== 'string' && row.agency !== null)) {
           hasTypeDrift = true;
         }
         if (row.agency === null || row.borough === null) {
@@ -947,60 +880,55 @@
       });
 
       if (hasTypeDrift) {
-        panel.className = 'p-5 rounded-xl bg-dark-950 border border-amber-500/40';
+        panel.className = 'p-6 rounded-xl bg-surface-base border border-amber-500/40 space-y-4';
         icon.className = 'fa-solid fa-triangle-exclamation text-amber-400 text-lg';
         title.innerText = 'Contract Violation: Type Mutation Detected';
         desc.innerText = 'Critical type drift: Field "unique_key" or "agency" observed non-string payload. Batch quarantined.';
-        badge.className = 'badge-pill bg-amber-500/20 text-amber-300';
+        badge.className = 'badge bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono';
         badge.innerText = 'Exit Code: 2 (Rejected)';
         list.innerHTML = `
-          <div class="p-2 rounded bg-dark-900 border border-amber-500/30 flex items-center justify-between">
-            <span><i class="fa-solid fa-xmark text-amber-400 mr-2"></i> Field <code>unique_key</code>: Expected <code>str</code>, observed <code>int</code></span>
-            <span class="text-amber-400 font-bold">MUTATION ERROR</span>
+          <div class="py-2.5 flex items-center justify-between text-amber-300">
+            <span>Field <code>unique_key</code>: Expected <code>str</code>, observed <code>int</code></span>
+            <span class="text-amber-400 font-bold">TYPE MUTATION</span>
           </div>
-          <div class="p-2 rounded bg-dark-900 border border-amber-500/30 flex items-center justify-between">
-            <span><i class="fa-solid fa-xmark text-amber-400 mr-2"></i> Field <code>agency</code>: Expected <code>str</code>, observed <code>int</code></span>
+          <div class="py-2.5 flex items-center justify-between text-amber-300">
+            <span>Field <code>agency</code>: Expected <code>str</code>, observed <code>int</code></span>
             <span class="text-amber-400 font-bold">TYPE MISMATCH</span>
           </div>
         `;
       } else if (hasNullDrift) {
-        panel.className = 'p-5 rounded-xl bg-dark-950 border border-rose-500/40';
+        panel.className = 'p-6 rounded-xl bg-surface-base border border-rose-500/40 space-y-4';
         icon.className = 'fa-solid fa-ban text-rose-400 text-lg';
         title.innerText = 'Quality Gate Block: Null Fraction Exceeded (100.0%)';
-        desc.innerText = 'Field "agency" null fraction (100%) exceeds contract threshold (0.0%). Downstream ingestion halted.';
-        badge.className = 'badge-pill bg-rose-500/20 text-rose-300';
+        desc.innerText = 'Field "agency" null fraction (100%) exceeds contract threshold (0.0%). Ingestion halted.';
+        badge.className = 'badge bg-rose-500/10 text-rose-400 border border-rose-500/20 font-mono';
         badge.innerText = 'Exit Code: 1 (Blocked)';
         list.innerHTML = `
-          <div class="p-2 rounded bg-dark-900 border border-rose-500/30 flex items-center justify-between">
-            <span><i class="fa-solid fa-circle-xmark text-rose-400 mr-2"></i> Field <code>agency</code>: Null fraction 100.0% (Allowed: 0.0%)</span>
-            <span class="text-rose-400 font-bold">BREACH</span>
-          </div>
-          <div class="p-2 rounded bg-dark-900 border border-rose-500/30 flex items-center justify-between">
-            <span><i class="fa-solid fa-circle-xmark text-rose-400 mr-2"></i> Field <code>borough</code>: Null fraction 100.0% (Allowed: 5.0%)</span>
-            <span class="text-rose-400 font-bold">BREACH</span>
+          <div class="py-2.5 flex items-center justify-between text-rose-300">
+            <span>Field <code>agency</code>: Null fraction 100.0% (Allowed: 0.0%)</span>
+            <span class="text-rose-400 font-bold">THRESHOLD BREACH</span>
           </div>
         `;
       } else {
-        panel.className = 'p-5 rounded-xl bg-dark-950 border border-emerald-500/30';
+        panel.className = 'p-6 rounded-xl bg-surface-base border border-emerald-500/30 space-y-4';
         icon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
         title.innerText = 'Contract Validation PASSED: 100% Invariant Compliance';
         desc.innerText = 'All incoming records conform strictly to schema specification types and nullity thresholds.';
-        badge.className = 'badge-pill bg-emerald-500/20 text-emerald-300';
+        badge.className = 'badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-mono';
         badge.innerText = 'Exit Code: 0';
         list.innerHTML = `
-          <div class="p-2 rounded bg-dark-900 border border-white/5 flex items-center justify-between">
-            <span><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Field <code>unique_key</code>: Type <code>str</code> verified • 0.00% null fraction</span>
-            <span class="text-emerald-400">OK</span>
+          <div class="py-2.5 flex items-center justify-between text-slate-300">
+            <span>Field <code>unique_key</code>: Type <code>str</code> verified • 0.00% null fraction</span>
+            <span class="text-emerald-400 font-bold">PASS</span>
           </div>
-          <div class="p-2 rounded bg-dark-900 border border-white/5 flex items-center justify-between">
-            <span><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Field <code>agency</code>: Type <code>str</code> verified • 0.00% null fraction</span>
-            <span class="text-emerald-400">OK</span>
+          <div class="py-2.5 flex items-center justify-between text-slate-300">
+            <span>Field <code>agency</code>: Type <code>str</code> verified • 0.00% null fraction</span>
+            <span class="text-emerald-400 font-bold">PASS</span>
           </div>
         `;
       }
     }
 
-    // AWS Spec Explorer
     const awsSpecs = {
       s3_bronze: {
         title: "AWS S3 Bronze Landing & Notification Configuration",
@@ -1016,7 +944,7 @@
       },
       manifest: {
         title: "Commit-Last Atomic Manifest Verification",
-        code: `// Commit-last semantic: Partitions written first; manifest written last\n// Athena queries filter strictly by active committed manifests.\n{\n  "batch_id": "dbef635d9ead64d311d1c85808752bdc0b5a4f18d5a9b652d720510be1e96ea9",\n  "source_sha256": "dc6018f61142c14c41003b32f69ece5ce08f5d525b132509c08408ef2dec9871",\n  "partitions": ["2025-01-01", "2025-01-02"],\n  "status": "committed"\n}`
+        code: `// Commit-last semantic: Partitions written first; manifest written last\n{\n  "batch_id": "dbef635d9ead64d311d1c85808752bdc0b5a4f18d5a9b652d720510be1e96ea9",\n  "source_sha256": "dc6018f61142c14c41003b32f69ece5ce08f5d525b132509c08408ef2dec9871",\n  "partitions": ["2025-01-01", "2025-01-02"],\n  "status": "committed"\n}`
       },
       athena: {
         title: "Athena Partition Projection Configuration",
@@ -1029,7 +957,6 @@
       document.getElementById('aws-spec-code').innerText = awsSpecs[key].code;
     }
 
-    // LedgerStream Interactive Actions
     let ledgerSeq = 3;
     function runLedgerAction(action) {
       const list = document.getElementById('ls-event-list');
@@ -1039,13 +966,13 @@
       if (action === 'order') {
         ledgerSeq++;
         const newEvent = document.createElement('div');
-        newEvent.className = 'p-2.5 rounded bg-dark-900 border border-teal-500/30 flex items-center justify-between animate-fadeIn';
+        newEvent.className = 'p-3 rounded-lg bg-surface-base border border-surface-border flex items-center justify-between text-slate-300';
         newEvent.innerHTML = `
           <div>
-            <span class="text-teal-400 font-bold">[COMMITTED]</span>
-            <span class="text-white ml-2">Seq #${ledgerSeq} • Order #o-${ledgerSeq} • status: "placed" • amount: $45.00</span>
+            <span class="text-emerald-400 font-bold">[COMMITTED]</span>
+            <span class="ml-2">Seq #${ledgerSeq} • Order #o-${ledgerSeq} • status: "placed" • amount: $45.00</span>
           </div>
-          <span class="text-gray-500 text-[11px]">TxId: tx-${9200 + ledgerSeq}</span>
+          <span class="text-slate-500 text-[11px]">TxId: tx-${9200 + ledgerSeq}</span>
         `;
         list.appendChild(newEvent);
         chk.innerText = 'Seq #' + ledgerSeq;
@@ -1053,25 +980,24 @@
       } else if (action === 'crash') {
         ledgerSeq++;
         const crashEvent = document.createElement('div');
-        crashEvent.className = 'p-2.5 rounded bg-dark-900 border border-rose-500/40 flex items-center justify-between';
+        crashEvent.className = 'p-3 rounded-lg bg-surface-base border border-rose-500/40 flex items-center justify-between text-slate-300';
         crashEvent.innerHTML = `
           <div>
             <span class="text-rose-400 font-bold">[INJECTED CRASH - ROLLED BACK]</span>
-            <span class="text-gray-400 ml-2">Failed after source write: Transaction rolled back atomically. Checkpoint preserved at Seq #${ledgerSeq - 1}.</span>
+            <span class="text-slate-400 ml-2">Failed after source write: Transaction rolled back atomically. Checkpoint preserved at Seq #${ledgerSeq - 1}.</span>
           </div>
-          <span class="text-rose-400 text-[11px]">0 Corrupted Rows</span>
+          <span class="text-rose-400 text-[11px] font-bold">0 Corrupted Rows</span>
         `;
         list.appendChild(crashEvent);
         ledgerSeq--;
       } else if (action === 'replay') {
         const replayNotice = document.createElement('div');
-        replayNotice.className = 'p-2 rounded bg-blue-900/30 border border-blue-500/30 text-blue-300 text-center text-xs';
-        replayNotice.innerHTML = '<i class="fa-solid fa-rotate-right mr-1"></i> Replayed full outbox stream: 100% deduplicated via receipt receipts ledger. Total revenue unchanged at ' + rev.innerText;
+        replayNotice.className = 'p-2.5 rounded-lg bg-surface-base border border-blue-500/30 text-blue-300 text-center text-xs font-mono';
+        replayNotice.innerHTML = 'Replayed full outbox stream: 100% deduplicated via receipt ledger. Total revenue unchanged at ' + rev.innerText;
         list.appendChild(replayNotice);
       }
     }
 
-    // DemandServe Real-Time Predictor
     function updateDemandServe() {
       const temp = parseFloat(document.getElementById('ds-temp').value);
       const hum = parseFloat(document.getElementById('ds-hum').value);
@@ -1083,7 +1009,6 @@
       document.getElementById('ds-hum-val').innerText = hum.toFixed(2);
       document.getElementById('ds-wind-val').innerText = wind.toFixed(2);
 
-      // Standardized Ridge model inference equation
       const base = 4500;
       const pred = Math.round(base + (temp * 3200) - (hum * 1400) - (wind * 800) + (season * 450) + (working * 600));
       const low = Math.round(pred * 0.88);
@@ -1093,7 +1018,6 @@
       document.getElementById('ds-interval').innerText = low.toLocaleString() + ' – ' + high.toLocaleString();
     }
 
-    // Initialize default tab charts on load
     window.addEventListener('DOMContentLoaded', () => {
       initCivicFlowCharts();
       window.cfChartsInitialized = true;
