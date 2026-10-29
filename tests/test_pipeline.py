@@ -18,8 +18,11 @@ class PipelineTests(unittest.TestCase):
         self.db = Path(self.temp.name) / "warehouse.sqlite"
 
     def scalar(self, query):
-        with sqlite3.connect(self.db) as c:
-            return c.execute(query).fetchone()[0]
+        conn = sqlite3.connect(self.db)
+        try:
+            return conn.execute(query).fetchone()[0]
+        finally:
+            conn.close()
 
     def test_replay_does_not_duplicate(self):
         first, _ = load(ROWS, self.db)
@@ -59,8 +62,11 @@ class PipelineTests(unittest.TestCase):
 
     def test_transaction_rolls_back(self):
         load(ROWS, self.db)
-        with sqlite3.connect(self.db) as c:
-            c.execute("CREATE TRIGGER fail_insert BEFORE INSERT ON requests WHEN NEW.unique_key='fail' BEGIN SELECT RAISE(ABORT,'injected'); END;")
+        conn = sqlite3.connect(self.db)
+        try:
+            conn.execute("CREATE TRIGGER fail_insert BEFORE INSERT ON requests WHEN NEW.unique_key='fail' BEGIN SELECT RAISE(ABORT,'injected'); END;")
+        finally:
+            conn.close()
         with self.assertRaises(sqlite3.IntegrityError):
             load([dict(ROWS[0], unique_key="new"), dict(ROWS[0], unique_key="fail")], self.db)
         self.assertEqual(self.scalar("SELECT count(*) FROM requests"), 3)

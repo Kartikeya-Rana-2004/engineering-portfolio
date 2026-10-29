@@ -6,11 +6,14 @@ import sqlite3
 
 
 def render(db, output):
-    with sqlite3.connect(f"file:{Path(db).resolve()}?mode=ro", uri=True) as connection:
-        total, closed, hours = connection.execute("SELECT count(*),sum(closed_date IS NOT NULL),avg(resolution_hours) FROM requests").fetchone()
-        boroughs = connection.execute("SELECT borough,count(*) FROM requests GROUP BY borough ORDER BY count(*) DESC").fetchall()
-        groups = connection.execute("SELECT day,borough,agency,complaint_type,request_count,closed_count,avg_resolution_hours FROM daily_service_metrics ORDER BY day DESC,request_count DESC LIMIT 100").fetchall()
-        runs = connection.execute("SELECT count(*),sum(quarantined) FROM runs").fetchone()
+    conn = sqlite3.connect(f"file:{Path(db).resolve()}?mode=ro", uri=True)
+    try:
+        total, closed, hours = conn.execute("SELECT count(*),sum(closed_date IS NOT NULL),avg(resolution_hours) FROM requests").fetchone()
+        boroughs = conn.execute("SELECT borough,count(*) FROM requests GROUP BY borough ORDER BY count(*) DESC").fetchall()
+        groups = conn.execute("SELECT day,borough,agency,complaint_type,request_count,closed_count,avg_resolution_hours FROM daily_service_metrics ORDER BY day DESC,request_count DESC LIMIT 100").fetchall()
+        runs = conn.execute("SELECT count(*),sum(quarantined) FROM runs").fetchone()
+    finally:
+        conn.close()
     bars = ""
     maximum = max((count for _, count in boroughs), default=1)
     for borough, count in boroughs:

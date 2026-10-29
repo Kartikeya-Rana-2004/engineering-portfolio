@@ -98,7 +98,8 @@ def load(rows, db_path, max_reject_fraction=0.05):
         return report, rejected
     db_path = Path(db_path)
     db_path.parent.mkdir(parents=True, exist_ok=True)
-    with sqlite3.connect(db_path) as connection:
+    connection = sqlite3.connect(db_path)
+    try:
         connection.executescript(SCHEMA)
         connection.execute("BEGIN IMMEDIATE")
         for row in accepted:
@@ -126,6 +127,9 @@ def load(rows, db_path, max_reject_fraction=0.05):
             connection.execute("INSERT INTO quarantine VALUES (?,?,?,?)", (run_id, rejected_row["index"], json.dumps(rejected_row["errors"]), json.dumps(rejected_row["record"])))
         checksum = hashlib.sha256(json.dumps(rows, sort_keys=True).encode()).hexdigest()
         connection.execute("INSERT INTO runs VALUES (?,?,?,?,?,?,?,?,?)", (run_id, datetime.now(timezone.utc).isoformat(), checksum, len(rows), len(accepted), len(rejected), report["inserted"], report["updated"], report["unchanged"]))
+        connection.commit()
+    finally:
+        connection.close()
     report["status"] = "completed"
     return report, rejected
 

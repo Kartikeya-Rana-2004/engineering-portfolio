@@ -20,9 +20,12 @@ def verify():
         replay, _ = load(rows, db)
         correction, _ = load([dict(rows[1], status="Closed", closed_date="2025-01-01T15:00:00")], db)
         blocked, _ = load([dict(rows[0], closed_date="2020-01-01")], db)
-        with sqlite3.connect(db) as connection:
-            silver = connection.execute("SELECT count(*) FROM requests").fetchone()[0]
-            gold = connection.execute("SELECT sum(request_count) FROM daily_service_metrics").fetchone()[0]
+        conn = sqlite3.connect(db)
+        try:
+            silver = conn.execute("SELECT count(*) FROM requests").fetchone()[0]
+            gold = conn.execute("SELECT sum(request_count) FROM daily_service_metrics").fetchone()[0]
+        finally:
+            conn.close()
         assert replay["inserted"] == 0 and replay["unchanged"] == 3
         assert correction["updated"] == 1 and silver == gold == 3
         assert blocked["status"] == "blocked_quality_gate"

@@ -22,9 +22,12 @@ def main():
         checkpoint_after_crash = sink.checkpoint("orders-v1")
         recovery = sink.apply(events)
         replay = sink.apply(events)
-        with sqlite3.connect(sink.path) as c:
-            metrics = c.execute("SELECT * FROM order_metrics").fetchall()
-            tombstones = c.execute("SELECT count(*) FROM state WHERE deleted=1").fetchone()[0]
+        conn = sqlite3.connect(sink.path)
+        try:
+            metrics = conn.execute("SELECT * FROM order_metrics").fetchall()
+            tombstones = conn.execute("SELECT count(*) FROM state WHERE deleted=1").fetchone()[0]
+        finally:
+            conn.close()
         assert checkpoint_after_crash == 0 and recovery["applied"] == 4 and replay["replayed"] == 4
         assert metrics == [("paid", 1, 5000)] and tombstones == 1
     evidence = {"execution": "real local SQLite source/outbox and projection; synthetic orders; no Kafka or PostgreSQL deployment",

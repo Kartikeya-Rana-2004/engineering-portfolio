@@ -15,15 +15,21 @@ class LedgerTests(unittest.TestCase):
         self.order = {"order_id": "o1", "amount_cents": 1200, "status": "placed"}
 
     def scalar(self, query):
-        with sqlite3.connect(self.sink.path) as c:
-            return c.execute(query).fetchone()[0]
+        conn = sqlite3.connect(self.sink.path)
+        try:
+            return conn.execute(query).fetchone()[0]
+        finally:
+            conn.close()
 
     def test_outbox_and_source_rollback_together(self):
         with self.assertRaises(RuntimeError):
             self.source.change("o1", self.order, fail_after_source=True)
         self.assertEqual(self.source.read(), [])
-        with sqlite3.connect(self.source.path) as c:
-            self.assertEqual(c.execute("SELECT count(*) FROM orders").fetchone()[0], 0)
+        conn = sqlite3.connect(self.source.path)
+        try:
+            self.assertEqual(conn.execute("SELECT count(*) FROM orders").fetchone()[0], 0)
+        finally:
+            conn.close()
 
     def test_source_change_creates_event(self):
         event = self.source.change("o1", self.order)
